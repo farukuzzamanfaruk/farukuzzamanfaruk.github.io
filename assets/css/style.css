@@ -11,7 +11,7 @@
 
   --text: #0F172A;
   --text-muted: #475569;
-  --text-faint: #94A3B8;
+  --text-faint: #5B6B84; /* WCAG AA: 5.17:1 on --bg (was #94A3B8 at 2.45:1, failing) */
 
   --navy: #0B1F3A;
   --navy-light: #16305A;
@@ -21,8 +21,7 @@
   --accent-dark: #0B7A6F;
   --accent-soft: #CCFBF1;
   --accent-contrast: #04302B;
-
-  --gold: #B8860B;
+  --accent-on-navy: #2DD4BF; /* for accent-colored text/icons on navy surfaces (hero, footer): 7-10:1 vs. plain --accent's 4.4:1 */
 
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -50,7 +49,7 @@
 
   --text: #E7ECF5;
   --text-muted: #9FB0C9;
-  --text-faint: #64758C;
+  --text-faint: #8DA0BC; /* WCAG AA: 7.03:1 on dark --bg (was #64758C at 3.98:1, failing) */
 
   --navy: #060D1B;
   --navy-light: #0F1D38;
@@ -75,7 +74,7 @@
 
     --text: #E7ECF5;
     --text-muted: #9FB0C9;
-    --text-faint: #64758C;
+    --text-faint: #8DA0BC; /* WCAG AA: 7.03:1 on dark --bg (was #64758C at 3.98:1, failing) */
 
     --navy: #060D1B;
     --navy-light: #0F1D38;
@@ -228,11 +227,11 @@ section + section { border-top: 1px solid var(--surface-border); }
 .hero .container { position: relative; display: grid; grid-template-columns: 1.35fr 0.9fr; gap: 56px; align-items: center; }
 .hero-eyebrow {
   font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+  color: var(--accent-on-navy); margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
 }
-.hero-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(13,148,136,0.25); }
+.hero-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-on-navy); box-shadow: 0 0 0 4px rgba(13,148,136,0.25); }
 .hero h1 { font-size: clamp(2.1rem, 4.2vw, 3.2rem); line-height: 1.12; letter-spacing: -0.015em; color: #fff; }
-.hero h1 .accent-word { color: var(--accent); }
+.hero h1 .accent-word { color: var(--accent-on-navy); }
 .hero-role { margin-top: 16px; font-size: 1.12rem; color: rgba(248,250,252,0.82); max-width: 46ch; }
 .hero-tagline { margin-top: 18px; font-size: 1.02rem; color: rgba(248,250,252,0.66); max-width: 54ch; }
 .hero-actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; }
@@ -435,7 +434,7 @@ section + section { border-top: 1px solid var(--surface-border); }
   display: flex; align-items: center; gap: 10px; padding: 8px 0; color: rgba(248,250,252,0.82); font-size: 0.92rem;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.footer-col a:hover { color: var(--accent); }
+.footer-col a:hover { color: var(--accent-on-navy); }
 .footer-col svg { flex-shrink: 0; width: 18px; height: 18px; }
 .footer-bottom {
   margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);

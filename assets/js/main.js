@@ -87,19 +87,33 @@
   const lightbox = $("#lightbox");
   const lightboxImg = $("#lightboxImg");
   const lightboxCaption = $("#lightboxCaption");
+  const lightboxCloseBtn = $("#lightboxClose");
+  let lastFocusedBeforeLightbox = null;
 
-  function openLightbox(src, caption) {
+  function openLightbox(src, caption, triggerEl) {
+    lastFocusedBeforeLightbox = triggerEl || document.activeElement;
     lightboxImg.src = src;
     lightboxImg.alt = caption || "";
     lightboxCaption.textContent = caption || "";
     lightbox.classList.add("open");
     document.body.style.overflow = "hidden";
+    lightboxCloseBtn.focus();
   }
   function closeLightbox() {
     lightbox.classList.remove("open");
     document.body.style.overflow = "";
     lightboxImg.src = "";
+    if (lastFocusedBeforeLightbox && lastFocusedBeforeLightbox.focus) lastFocusedBeforeLightbox.focus();
+    lastFocusedBeforeLightbox = null;
   }
+  // Only one focusable element inside (the close button) -- keep focus pinned there
+  // so Tab/Shift+Tab never escapes to the page behind the overlay.
+  lightbox.addEventListener("keydown", (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      lightboxCloseBtn.focus();
+    }
+  });
   $("#lightboxClose").addEventListener("click", closeLightbox);
   lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
@@ -110,7 +124,7 @@
     const containerId = card.dataset.container;
     const idx = Number(card.dataset.idx);
     const item = window.__MEDIA__ && window.__MEDIA__[containerId] && window.__MEDIA__[containerId][idx];
-    if (item && item.image) openLightbox(item.image, item.caption);
+    if (item && item.image) openLightbox(item.image, item.caption, card);
   });
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
