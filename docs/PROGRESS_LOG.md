@@ -5,6 +5,30 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — Post-launch corrections (round 2)
+
+- **Publications ordering, take two**: round 1's authorship-first sort
+  meant the 10-item preview never showed recent papers (Faruk is rarely
+  first author on the newer collaborative work), so the user asked for
+  latest-year visibility back. Swapped the sort key to
+  `(year desc, authorPosition asc)` — preview now always leads with the
+  newest year, author position only breaks ties within a year. Added a
+  small "First Author" badge on qualifying papers so that signal is still
+  visible even when they're not at the top of the list.
+- **Justified prose paragraphs** site-wide (`text-align: justify` +
+  `hyphens: auto` + `text-align-last: left`): the About/Objective text,
+  section intro paragraphs, hero tagline/role, supervisor blurb, news
+  descriptions, footer tagline, timeline detail lines, and media
+  (award/gallery) captions. Deliberately left citation-style text
+  (publication title/authors/venue) and bulleted lists ragged-right —
+  standard convention for those, and justify tends to look worse on
+  irregular short segments like semicolon-separated author lists.
+  Verified at both desktop and mobile widths — hyphenation keeps it
+  clean, no visible gap artifacts.
+- Also removed a dead/invalid CSS rule left over from earlier editing.
+
+---
+
 ## 2026-07-19 — Post-launch corrections (round 1)
 
 User-requested fixes after reviewing the live site:
