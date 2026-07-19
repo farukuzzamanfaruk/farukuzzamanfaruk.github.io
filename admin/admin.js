@@ -502,10 +502,12 @@
   });
 
   $("#copyPublishBtn").addEventListener("click", async () => {
-    const cmd = 'git add -A && git commit -m "Update portfolio content" && git push';
+    // ";" (not "&&") on purpose: works in both PowerShell (incl. the 5.1
+    // that ships on Windows, where "&&" is a syntax error) and bash/zsh.
+    const cmd = 'git add -A; git commit -m "Update portfolio content"; git push';
     try {
       await navigator.clipboard.writeText(cmd);
-      toast("Copied to clipboard — run it in a terminal in your project folder.");
+      toast("Copied to clipboard — paste into a terminal in your project folder.");
     } catch {
       toast(cmd, false);
     }

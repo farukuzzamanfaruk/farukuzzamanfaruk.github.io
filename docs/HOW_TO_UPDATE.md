@@ -111,7 +111,22 @@ periods).
 
 **Or, do it yourself:** click **"📋 Copy publish commands"** in the
 sidebar, open a terminal in your project folder, paste, and press Enter.
-It runs three commands that save and upload your changes.
+
+**Which terminal?** Any terminal opened *in your project folder* works —
+the one built into VS Code (menu: Terminal → New Terminal) is the easiest.
+On Windows that's PowerShell by default, and the copied command is
+written to work there.
+
+**If you ever type the commands by hand instead of pasting:** use
+semicolons, not `&&`, between them — Windows PowerShell doesn't support
+`&&`:
+
+```
+git add -A; git commit -m "Update portfolio content"; git push
+```
+
+(Mac/Linux terminals, or PowerShell 7+, accept either `;` or `&&` — `;`
+always works everywhere, so it's the safe default.)
 
 ---
 
