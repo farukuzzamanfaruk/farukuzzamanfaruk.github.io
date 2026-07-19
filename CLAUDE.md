@@ -28,6 +28,13 @@ Content lives in `data/*.json`, fetched at runtime and rendered by
   sort order.
 - `Resources/` and `.claude/` are gitignored — never expect them on the
   live site or in the repo.
+- `.githooks/pre-commit` — auto-stamps `data/profile.json`'s
+  `lastUpdated` (shown in the footer) to today's date on every commit,
+  regardless of what changed or who's committing. Already active on this
+  checkout (`git config core.hooksPath .githooks`). **If the repo is ever
+  freshly cloned onto another machine, re-run that one config command** —
+  `core.hooksPath` is a per-clone local setting, not something cloning
+  picks up automatically.
 
 ## Content/design conventions (established via user feedback — don't re-litigate)
 

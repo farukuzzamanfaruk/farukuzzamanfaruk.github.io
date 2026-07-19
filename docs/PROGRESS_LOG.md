@@ -5,6 +5,21 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — "Last updated" now auto-stamps itself
+
+The footer's "Last updated" date was a manually-maintained field in
+`profile.json` — user asked for it to update itself automatically.
+Added `.githooks/pre-commit` (a git hook, not a page script): on every
+`git commit`, it rewrites `profile.json`'s `lastUpdated` to today's date
+and folds that into the same commit. Set `git config core.hooksPath
+.githooks` on this checkout so it's active. This covers every editing
+path uniformly (admin panel, direct JSON edits, Claude-made commits) —
+whatever triggers a commit triggers the stamp, so there's no per-workflow
+special-casing needed. Verified: committed the hook itself, watched
+`lastUpdated` flip from 2026-07-18 to 2026-07-19 in that same commit.
+
+---
+
 ## 2026-07-19 — User's first self-service edit via the admin panel + a bug it exposed
 
 - Faruk made his first edits himself through `admin/index.html`: new
