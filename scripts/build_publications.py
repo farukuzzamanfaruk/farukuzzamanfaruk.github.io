@@ -35,7 +35,7 @@ def main():
         rows = list(reader)
 
     pubs = []
-    for i, row in enumerate(rows):
+    for row in rows:
         authors_raw = row["Authors"].strip()
         authors_list = split_authors(authors_raw)
         authors_display = "; ".join(
@@ -54,7 +54,6 @@ def main():
         award = BEST_PAPER_TITLE.lower() in row["Title"].strip().lower() and "IEEE Bangladesh Section Best Paper Award" or None
 
         pubs.append({
-            "id": i + 1,
             "authorsDisplay": authors_display,
             "authorPosition": author_position,
             "title": row["Title"].strip(),
@@ -71,8 +70,6 @@ def main():
     # shown before "show all" -- always surfaces latest-year work), and within
     # the same year, closest to first author first.
     pubs.sort(key=lambda p: (-(p["year"] if p["year"] is not None else -9999), p["authorPosition"]))
-    for idx, p in enumerate(pubs):
-        p["id"] = idx + 1
 
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(pubs, f, indent=2, ensure_ascii=False)

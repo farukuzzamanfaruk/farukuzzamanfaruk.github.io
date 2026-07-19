@@ -4,10 +4,21 @@
     "Deep Learning",
     "Deep Learning Systems Optimization",
     "Large Language Models",
-    "Medical Image Processing"
+    "Medical Image Processing",
+    "Signal Procesing"
   ],
-  "languages": ["C", "C++", "Python", "PHP", "Java", "JavaScript"],
-  "frameworks": ["PyTorch", "TensorFlow"],
+  "languages": [
+    "C",
+    "C++",
+    "Python",
+    "PHP",
+    "Java",
+    "JavaScript"
+  ],
+  "frameworks": [
+    "PyTorch",
+    "TensorFlow"
+  ],
   "interpersonal": [
     "Presentation",
     "Documentation",
@@ -15,6 +26,9 @@
     "Time and Event Management"
   ],
   "spokenLanguages": [
-    { "language": "English", "level": "Full professional proficiency" }
+    {
+      "language": "English",
+      "level": "Full professional proficiency"
+    }
   ]
 }

@@ -64,9 +64,14 @@
     },
     publications: {
       label: "Publications", type: "list", file: "data/publications.json", itemLabel: (i) => i.title,
+      // Keeps the file in the site's actual display order (newest year first,
+      // author position breaks ties) after every add/edit/delete, so entries
+      // never need to be manually placed.
+      sort: (a, b) => (b.year || 0) - (a.year || 0) || (a.authorPosition || 99) - (b.authorPosition || 99),
       fields: [
         { key: "title", label: "Title", type: "textarea" },
         { key: "authorsDisplay", label: "Authors", type: "textarea", hint: "Wrap your own name in ** ** so it renders bold, e.g. **Faruk, Md Farukuzzaman**." },
+        { key: "authorPosition", label: "Your author position", type: "number", hint: "1 = first author, 2 = second, etc. Controls the \"First Author\" badge and breaks sort ties within the same year." },
         { key: "venue", label: "Venue", type: "text" },
         { key: "volume", label: "Volume", type: "text" },
         { key: "number", label: "Number", type: "text" },
@@ -302,7 +307,7 @@
     if (field.type === "number") {
       return input.value === "" ? null : Number(input.value);
     }
-    return input.value.trim() === "" ? (field.type === "url" ? null : "") : input.value;
+    return input.value.trim() === "" ? null : input.value;
   }
 
   // ---------------- Object-type section (profile, skills, service) ----------------
@@ -434,7 +439,10 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const newItem = {};
+      // Start from a copy of the existing item (not {}) so any fields the
+      // form doesn't expose (e.g. a computed value) survive the save
+      // instead of silently disappearing.
+      const newItem = isNew ? {} : { ...item };
       schema.fields.forEach((field) => {
         const fieldEl = field.type === "image"
           ? form.querySelector(`[data-field-key="${field.key}"][data-field-type="image"]`)
@@ -446,6 +454,7 @@
       });
       if (isNew) items.push(newItem);
       else items[idx] = newItem;
+      if (schema.sort) items.sort(schema.sort);
       try {
         await writeJSON(schema.file, items);
         $("#modalOverlay").classList.remove("open");
