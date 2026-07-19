@@ -9,3 +9,6 @@
 .DS_Store
 Thumbs.db
 *.swp
+
+# Claude Code harness-local state (not project content)
+.claude/
