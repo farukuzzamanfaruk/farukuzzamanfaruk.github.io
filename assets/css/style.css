@@ -131,10 +131,30 @@ section + section { border-top: 1px solid var(--surface-border); }
   font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--accent-dark); font-weight: 600; margin-bottom: 12px;
 }
-[data-theme="dark"] .eyebrow, @media (prefers-color-scheme: dark) { }
 .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--accent); display: inline-block; }
 .section-head h2 { font-size: clamp(1.6rem, 2.4vw, 2.1rem); letter-spacing: -0.01em; }
 .section-head p { margin-top: 14px; color: var(--text-muted); font-size: 1.02rem; }
+
+/* ---------- Justified prose ----------
+   Narrative/descriptive paragraphs read better justified (even edges on both
+   sides); hyphens:auto softens the inter-word gaps justify can otherwise
+   create. Deliberately NOT applied to citation-style text (publication
+   title/authors/venue) or bulleted lists, where ragged-right is the standard,
+   more legible convention. */
+.about-lede,
+.hero-role,
+.hero-tagline,
+.section-head p,
+.about-supervisor p,
+.footer-brand p,
+.news-item p,
+.timeline-detail,
+.media-title,
+.media-date {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
 
 /* ---------- Reveal-on-scroll ----------
    Progressive enhancement: elements are fully visible by default (works with
@@ -363,6 +383,11 @@ section + section { border-top: 1px solid var(--surface-border); }
   display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 5px 12px;
   border-radius: 999px; background: var(--accent-soft); color: var(--accent-contrast);
   font-size: 0.78rem; font-weight: 700;
+}
+.pub-badge {
+  display: inline-flex; align-items: center; padding: 4px 11px; border-radius: 999px;
+  border: 1px solid var(--accent-dark); color: var(--accent-dark); font-size: 0.72rem;
+  font-weight: 700; letter-spacing: 0.02em; flex-shrink: 0; white-space: nowrap;
 }
 .pub-empty { padding: 40px; text-align: center; color: var(--text-muted); }
 .pub-more { display: flex; justify-content: center; margin-top: 24px; }

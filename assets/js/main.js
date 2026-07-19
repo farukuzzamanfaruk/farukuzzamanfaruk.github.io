@@ -167,6 +167,7 @@
       <article class="card pub-item reveal visible">
         <div class="pub-top">
           <div class="pub-year">${p.year || "—"}</div>
+          ${p.authorPosition === 1 ? `<span class="pub-badge">First Author</span>` : ""}
         </div>
         <div class="pub-title">${window.__escapeHtml(p.title)}</div>
         <div class="pub-authors">${window.__mdBold(p.authorsDisplay)}</div>

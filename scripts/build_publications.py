@@ -67,10 +67,10 @@ def main():
             "award": award,
         })
 
-    # Default display order: closest to first author first (this is the site's
-    # "preview" ordering, since only a subset is shown before "show all"), then
-    # newest first within the same author position.
-    pubs.sort(key=lambda p: (p["authorPosition"], -(p["year"] if p["year"] is not None else -9999)))
+    # Default display order: newest first (so the preview -- only a subset is
+    # shown before "show all" -- always surfaces latest-year work), and within
+    # the same year, closest to first author first.
+    pubs.sort(key=lambda p: (-(p["year"] if p["year"] is not None else -9999), p["authorPosition"]))
     for idx, p in enumerate(pubs):
         p["id"] = idx + 1
 
