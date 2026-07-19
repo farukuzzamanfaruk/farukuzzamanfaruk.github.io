@@ -5,6 +5,28 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — Phase 6: published live 🎉
+
+- User created the GitHub account `farukuzzamanfaruk` and supplied a
+  Personal Access Token (used once for auth, never persisted to memory or
+  git config — see `[[github_portfolio_account]]` in the memory system for
+  why, and for the non-secret account reference).
+- Renamed local branch `master` → `main`, created the
+  `farukuzzamanfaruk/farukuzzamanfaruk.github.io` repo via the GitHub API,
+  pushed via a one-off authenticated URL (no token written to disk),
+  added `origin` remote (no embedded credentials) with upstream tracking.
+- GitHub Pages auto-enabled on push (source: `main` branch, `/` root).
+  First build took a few minutes (normal for a brand-new account/domain).
+- **Verified live**: https://farukuzzamanfaruk.github.io/ returns 200,
+  renders identically to local testing (checked with Playwright — 0
+  console errors), CV PDF and admin panel both resolve, `data/*.json`
+  fetches correctly.
+- The portfolio is live and fully editable going forward via
+  `admin/index.html` (works both locally and directly from the published
+  `/admin/` URL, per the design).
+
+---
+
 ## 2026-07-19 — Phases 3–8: site built, tested, and ready to publish
 
 - Built the full single-page site (`index.html`, `assets/css/style.css`,
