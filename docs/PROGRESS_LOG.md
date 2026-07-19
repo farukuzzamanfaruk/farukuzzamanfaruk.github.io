@@ -5,6 +5,44 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — User's first self-service edit via the admin panel + a bug it exposed
+
+- Faruk made his first edits himself through `admin/index.html`: new
+  profile photo (in front of the ULL fountain logo), added "Signal
+  Processing" to research interests, corrected a publication's publisher.
+  Tried to publish via the "Copy publish commands" button's `&&`-chained
+  command in VS Code's integrated terminal — that's PowerShell 5.1 by
+  default on Windows, which doesn't support `&&` (Bash/PowerShell-7+
+  only). Told him to run the three commands on separate lines instead;
+  Claude published this round directly.
+- **Found and fixed a real admin-panel bug** while reviewing the diff:
+  editing a list item rebuilt it from an empty object using only the
+  fields the form exposes, silently dropping anything not in the schema
+  — here, `publications.json`'s `authorPosition` (which drives the
+  "First Author" badge) vanished from the one entry he edited. Root
+  cause: `admin.js`'s item-save handler did `const newItem = {}` instead
+  of merging into the existing item.
+  - Fixed: now starts from `{ ...item }` so unlisted fields survive.
+  - Exposed `authorPosition` as an actual editable field on the
+    Publications form (was invisible/uneditable before — the direct
+    cause of the bug being possible at all) with a hint explaining it.
+  - Added an optional per-schema `sort` comparator, applied after every
+    list add/edit/delete; publications now auto-resort to
+    `(year desc, authorPosition asc)` so entries never need manual
+    placement.
+  - Standardized empty text fields to save as `null` (was inconsistently
+    `""` for text vs `null` for url fields).
+  - Dropped the unused `id` field from publications entirely (grepped —
+    never read anywhere in `assets/js/`); removed it from
+    `build_publications.py` too so regeneration doesn't reintroduce it.
+  - Restored the dropped `authorPosition: 4` on the affected entry.
+- Verified with the mocked-filesystem admin test: editing an item now
+  preserves `authorPosition` and shows it pre-filled in the form; full
+  site smoke test still 0 console errors; new profile photo crops
+  cleanly into the circular hero frame.
+
+---
+
 ## 2026-07-19 — Post-launch corrections (round 2)
 
 - **Publications ordering, take two**: round 1's authorship-first sort
