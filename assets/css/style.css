@@ -93,7 +93,7 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); overflow-x: hidden; }
 body {
   margin: 0;
   background: var(--bg);
@@ -103,6 +103,10 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   transition: background var(--transition), color var(--transition);
+  overflow-x: hidden; /* the closed mobile nav-links panel sits off-canvas via
+    translateX(100%), but as a transformed position:fixed element it still
+    contributes to the document's scrollable width in Chromium; this is the
+    standard guard against that (and any other stray off-canvas element). */
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -235,12 +239,12 @@ section + section { border-top: 1px solid var(--surface-border); }
 }
 .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .theme-toggle {
-  width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2);
+  width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2);
   background: transparent; color: var(--navy-contrast); display: flex; align-items: center; justify-content: center;
 }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 .nav-toggle {
-  display: none; width: 40px; height: 40px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+  display: none; width: 44px; height: 44px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
   background: transparent; color: var(--navy-contrast); align-items: center; justify-content: center;
 }
 
