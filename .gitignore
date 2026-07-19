@@ -1,0 +1,11 @@
+# Raw source material (CV, original photos, links) - not part of the published site.
+# Everything needed for the live site is copied/cleaned into assets/ and data/.
+/Resources/
+
+# Misc local notes not meant for the public repo
+/Claude Code Prompts/
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+*.swp
