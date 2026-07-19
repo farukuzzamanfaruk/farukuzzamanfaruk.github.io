@@ -5,6 +5,42 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — Mobile/tablet compatibility audit
+
+User asked whether the site is fully compatible with phones and tablets.
+Rather than assume, audited the live site with Playwright across 8 real
+device profiles (iPhone SE, 15/16 Pro, 17 Pro Max, Pixel 8, Galaxy S24,
+iPad Mini, iPad Air/Pro 11, standard iPad) in both orientations —
+checking horizontal overflow, nav hamburger open/close, lightbox
+tap-to-open, and touch target sizes.
+
+Found and fixed three real bugs, all specific to phone-width viewports
+(<=430px):
+1. `#pubStatGrid`'s inline `grid-template-columns:repeat(4,1fr)` beat the
+   responsive `@media (max-width:700px)` 2-column rule (inline > media-
+   query'd class), so 2 of its 4 tiles rendered off-screen on phones.
+   Removed the inline override.
+2. The page was horizontally scrollable on phones: the closed mobile nav
+   is a `position:fixed` panel pushed off-canvas with
+   `transform:translateX(100%)`, but Chromium still counts a transformed
+   fixed element's box toward the document's scrollable width. Added
+   `overflow-x:hidden` on html/body as the standard guard.
+3. Theme-toggle (38px) and mobile nav-toggle (40px) were slightly under
+   the 44x44px minimum recommended touch target size — bumped both.
+
+**Testing gotcha worth remembering**: Playwright's `is_mobile`/`has_touch`
+context options silently clamp narrow viewport widths to ~484px in this
+environment's headless Chromium (confirmed: identical request differs
+only by that flag, 375px stayed 375px without it, became 484px with it) —
+a testing-environment artifact, not a real browser behavior. Use plain
+`viewport={width,height}` contexts with `.click()` instead of `.tap()`
+for trustworthy mobile-width testing here.
+
+Re-audited after fixing: 0 overflow, 0 console errors, all interactions
+working across all 16 device/orientation combinations.
+
+---
+
 ## 2026-07-19 — "Last updated" now auto-stamps itself
 
 The footer's "Last updated" date was a manually-maintained field in

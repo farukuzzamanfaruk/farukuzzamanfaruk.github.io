@@ -61,7 +61,14 @@ Content lives in `data/*.json`, fetched at runtime and rendered by
 2. **Test locally before pushing**: `py -m http.server 8000` from the
    project root, then check in a browser (or drive it with Playwright —
    `py -m playwright install chromium` if not already installed). Check
-   for console errors.
+   for console errors. For mobile/tablet testing, use plain
+   `browser.new_context(viewport={"width":..., "height":...})` with
+   `.click()` — **not** `context(**p.devices["..."])` with `is_mobile`/
+   `has_touch` and `.tap()`. The `is_mobile` flag silently clamps narrow
+   viewport widths to ~484px in this environment's headless Chromium
+   (verified: identical request, only difference is that flag, and 375px
+   becomes 484px) — a testing-environment artifact, not real browser
+   behavior, that produces false-positive overflow/tap-timeout failures.
 3. Commit, then push with:
    ```
    git push "https://farukuzzamanfaruk@github.com/farukuzzamanfaruk/farukuzzamanfaruk.github.io.git" main:main
