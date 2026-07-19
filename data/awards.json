@@ -1,12 +1,5 @@
 [
   {
-    "title": "IEEE Bangladesh Section Best Paper Award",
-    "caption": "Best Paper Award — 3rd International Conference on Electrical, Computer, and Telecommunication Engineering (ICECTE), 2019",
-    "org": "IEEE Bangladesh Section, Faculty of ECE, RUET, Rajshahi-6204, Bangladesh",
-    "date": "2019",
-    "image": "assets/img/awards/ieee-best-paper-award-icecte-2019.jpg"
-  },
-  {
     "title": "Award of Excellence",
     "caption": "Award of Excellence, University of Louisiana at Lafayette — Spring 2026",
     "org": "University of Louisiana at Lafayette",
@@ -21,17 +14,17 @@
     "image": "assets/img/awards/vc-research-award-fy2021-22.jpg"
   },
   {
-    "title": "University Merit Scholarship",
-    "caption": "University Merit Scholarship, awarded throughout undergraduate study",
-    "org": "RUET, Rajshahi-6204, Bangladesh",
-    "date": "2014 – 2018",
-    "image": null
-  },
-  {
     "title": "Foundation Training on Teaching-Learning",
     "caption": "Certificate of Completion — Foundation Training on Teaching-Learning",
     "org": "RUET, Rajshahi, Bangladesh",
     "date": "19–22 September 2020",
     "image": "assets/img/awards/foundation-training-teaching-learning.jpg"
+  },
+  {
+    "title": "IEEE Bangladesh Section Best Paper Award",
+    "caption": "Best Paper Award — 3rd International Conference on Electrical, Computer, and Telecommunication Engineering (ICECTE), 2019",
+    "org": "IEEE Bangladesh Section, Faculty of ECE, RUET, Rajshahi-6204, Bangladesh",
+    "date": "2019",
+    "image": "assets/img/awards/ieee-best-paper-award-icecte-2019.jpg"
   }
 ]

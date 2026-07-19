@@ -5,6 +5,40 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-07-19 — Post-launch corrections (round 1)
+
+User-requested fixes after reviewing the live site:
+
+- Added a standalone **CV** pill to the nav bar (opens the PDF in a new
+  tab) so it's findable at a glance, without scrolling.
+- Renamed the hero's "Download CV" button to **"View CV"**.
+- **Publications default ordering changed**: `build_publications.py` now
+  computes an `authorPosition` field (his index in the author list) and
+  sorts by `(authorPosition asc, year desc)` instead of pure year-desc.
+  His 5 first-author papers (including the Best Paper Award winner) now
+  lead the list, then 2nd-author papers newest-first, etc. — this is what
+  shows in the 10-item preview before "show all".
+- **Awards & Honors**: removed the "University Merit Scholarship" entry;
+  reordered the remaining 4 latest-first (Award of Excellence 2026 → VC
+  Research Award FY21-22 → Foundation Training 2020 → IEEE Best Paper
+  2019).
+- **Funded Projects**: marked the fake-news GRU project "Completed",
+  duration set to "July 2024 – June 2025" (was "Ongoing").
+- **Gallery**: shortened the ULL-campus photo's caption (was redundantly
+  repeating "University of Louisiana at Lafayette" in both the org line
+  and the caption).
+- **News & Updates**: moved the Spring 2026 Award of Excellence entry to
+  the top (was 2nd).
+- **Service**: fixed `trainingWorkshops` order in `service.json` — the
+  2020 training was listed before the 2021 workshop; swapped so latest is
+  first, consistent with every other list on the site.
+- Re-verified with Playwright (nav CV link/target, hero button text,
+  publications preview order, awards/gallery/news order, project status) —
+  all pass, 0 console errors, mobile nav still renders correctly with the
+  added CV pill.
+
+---
+
 ## 2026-07-19 — Phase 6: published live 🎉
 
 - User created the GitHub account `farukuzzamanfaruk` and supplied a

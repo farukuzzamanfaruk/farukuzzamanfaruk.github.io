@@ -59,12 +59,13 @@
     }
 
     const actions = document.getElementById("heroActions");
-    const cvBtn = `<a class="btn btn-primary" href="${escapeHtml(p.cvFile)}" target="_blank" rel="noopener">${ICONS.cv} Download CV</a>`;
+    const cvBtn = `<a class="btn btn-primary" href="${escapeHtml(p.cvFile)}" target="_blank" rel="noopener">${ICONS.cv} View CV</a>`;
     const scholarBtn = `<a class="btn btn-outline" href="${escapeHtml(p.socials.googleScholar)}" target="_blank" rel="noopener">${ICONS.scholar} Google Scholar</a>`;
     const emailBtn = `<a class="btn btn-outline" href="mailto:${escapeHtml(p.emails.university)}">${ICONS.mail} Email</a>`;
     actions.innerHTML = cvBtn + scholarBtn + emailBtn;
 
     document.getElementById("scholarLink").href = p.socials.googleScholar;
+    document.getElementById("navCvLink").href = p.cvFile;
 
     const statGrid = document.getElementById("statGrid");
     const stats = [

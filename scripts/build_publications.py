@@ -41,6 +41,10 @@ def main():
         authors_display = "; ".join(
             (f"**{a}**" if NAME_RE.search(a) else a) for a in authors_list
         )
+        author_position = next(
+            (idx + 1 for idx, a in enumerate(authors_list) if NAME_RE.search(a)),
+            len(authors_list) + 1,  # safety net; should never trigger, his name is always present
+        )
         year_raw = (row.get("Year") or "").strip()
         try:
             year = int(year_raw)
@@ -52,6 +56,7 @@ def main():
         pubs.append({
             "id": i + 1,
             "authorsDisplay": authors_display,
+            "authorPosition": author_position,
             "title": row["Title"].strip(),
             "venue": row["Publication"].strip(),
             "volume": (row.get("Volume") or "").strip() or None,
@@ -62,8 +67,10 @@ def main():
             "award": award,
         })
 
-    # Sort newest first; stable so same-year entries keep CSV relative order
-    pubs.sort(key=lambda p: (p["year"] if p["year"] is not None else -1), reverse=True)
+    # Default display order: closest to first author first (this is the site's
+    # "preview" ordering, since only a subset is shown before "show all"), then
+    # newest first within the same author position.
+    pubs.sort(key=lambda p: (p["authorPosition"], -(p["year"] if p["year"] is not None else -9999)))
     for idx, p in enumerate(pubs):
         p["id"] = idx + 1
 

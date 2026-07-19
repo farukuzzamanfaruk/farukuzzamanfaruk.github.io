@@ -21,14 +21,14 @@
   "supervision": "Supervised more than 15 undergraduate students' thesis work.",
   "trainingWorkshops": [
     {
-      "title": "Foundation Training on Teaching-Learning",
-      "org": "RUET, Rajshahi, Bangladesh",
-      "date": "19–22 September 2020"
-    },
-    {
       "title": "Workshop on BQNF and BAC Accreditation",
       "org": "RUET, Rajshahi, Bangladesh",
       "date": "19–28 June 2021"
+    },
+    {
+      "title": "Foundation Training on Teaching-Learning",
+      "org": "RUET, Rajshahi, Bangladesh",
+      "date": "19–22 September 2020"
     }
   ]
 }
