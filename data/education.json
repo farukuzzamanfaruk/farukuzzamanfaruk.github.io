@@ -1,0 +1,28 @@
+[
+  {
+    "period": "2025 – Ongoing",
+    "degree": "PhD in Computer Science",
+    "org": "School of Computing & Informatics, University of Louisiana at Lafayette, LA, USA",
+    "detail": null,
+    "supervisor": "Dr. Li Chen, Associate Professor, School of Computing and Informatics, University of Louisiana at Lafayette, LA, USA",
+    "supervisorLink": "https://lichenut.github.io/"
+  },
+  {
+    "period": "2019 – 2021",
+    "degree": "Master of Science in Computer Science & Engineering",
+    "org": "Department of Computer Science & Engineering, RUET, Rajshahi-6204, Bangladesh",
+    "detail": "CGPA: 3.92 (out of 4.00)",
+    "thesis": "Deep Convolutional Neural Network-based Medical Images Analysis",
+    "supervisor": "Prof. Dr. Md. Rabiul Islam, Dept. of CSE, RUET",
+    "supervisorLink": null
+  },
+  {
+    "period": "2014 – 2018",
+    "degree": "Bachelor of Science in Computer Science & Engineering",
+    "org": "Department of Computer Science & Engineering, RUET, Rajshahi-6204, Bangladesh",
+    "detail": "CGPA: 3.90 (out of 4.00), Position: Third (out of 106 students)",
+    "thesis": "Prediction of DNA Methylation Status Using Support Vector Machine",
+    "supervisor": null,
+    "supervisorLink": null
+  }
+]

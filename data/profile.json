@@ -1,0 +1,36 @@
+{
+  "name": "Md Farukuzzaman Faruk",
+  "shortName": "Faruk",
+  "title": "PhD Student in Computer Science",
+  "affiliation": "School of Computing & Informatics, University of Louisiana at Lafayette",
+  "tagline": "Researching reliable, transparent AI systems — at the crossroads of deep learning theory and deep learning systems optimization.",
+  "objective": "I want to build a career as a computer science researcher and educator, working at the crossroads of academic inquiry and industry application. My focus is on advancing AI systems that are reliable, transparent, and genuinely useful — bridging the gap between what we discover in the lab and what actually works in the world.",
+  "location": "Lafayette, Louisiana, USA",
+  "photo": "assets/img/profile/faruk-profile.jpg",
+  "cvFile": "assets/cv/CV_FARUK.pdf",
+  "cvDriveLink": "https://drive.google.com/file/d/1a7K-yVbd-r8SibGQWzQwpbhCunJNAYvP/view?usp=sharing",
+  "emails": {
+    "university": "md-farukuzzaman.faruk1@louisiana.edu",
+    "personal": "faarukuzzaman@gmail.com"
+  },
+  "socials": {
+    "googleScholar": "https://scholar.google.com/citations?user=NAE84dMAAAAJ&hl=en",
+    "researchGate": "https://www.researchgate.net/profile/Md-Faruk-22?ev=hdr_xprf",
+    "orcid": "https://orcid.org/0000-0001-6446-1066",
+    "linkedin": "https://www.linkedin.com/in/md-farukuzzaman-faruk-269584132",
+    "facebook": "https://www.facebook.com/Faarukuzzaman",
+    "ruetProfile": "https://www.cse.ruet.ac.bd/farukuzzaman"
+  },
+  "supervisor": {
+    "name": "Dr. Li Chen",
+    "titleLine": "Alfred and Helen Lamson/BORSF Endowed Associate Professor, School of Computing and Informatics, University of Louisiana at Lafayette",
+    "website": "https://lichenut.github.io/"
+  },
+  "stats": {
+    "teachingYears": "7+",
+    "publications": 67,
+    "fundedProjects": 4,
+    "thesesSupervised": "15+"
+  },
+  "lastUpdated": "2026-07-18"
+}

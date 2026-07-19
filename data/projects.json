@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Exploiting the Robust Features of Adapted Multi-Layer Gated Recurrent Units for Comprehensive Fake News Identification",
+    "role": "Project Director",
+    "duration": "Ongoing",
+    "funding": "150,000 BDT",
+    "funder": "University Grants Commission of Bangladesh (UGC) and Office of the Director of Research & Extension, RUET",
+    "status": "Ongoing"
+  },
+  {
+    "name": "Synergistic Ensemble: Integrating Vision Transformer and ResNet101 for the Precise Classification of Leukemia Subtypes",
+    "role": "Project Director",
+    "duration": "July 2023 – June 2024",
+    "funding": "150,000 BDT",
+    "funder": "University Grants Commission of Bangladesh (UGC) and Office of the Director of Research & Extension, RUET",
+    "status": "Completed"
+  },
+  {
+    "name": "Fast and Automatic Approach for the Detection of Gastrointestinal Diseases Using Deep Network",
+    "role": "Project Director",
+    "duration": "July 2022 – June 2023",
+    "funding": "150,000 BDT",
+    "funder": "University Grants Commission of Bangladesh (UGC) and Office of the Director of Research & Extension, RUET",
+    "status": "Completed"
+  },
+  {
+    "name": "Diagnosis of COVID-19 Cases Using Deep Network from Chest Images",
+    "role": "Project Director",
+    "duration": "July 2021 – June 2022",
+    "funding": "150,000 BDT",
+    "funder": "University Grants Commission of Bangladesh (UGC) and Office of the Director of Research & Extension, RUET",
+    "status": "Completed"
+  }
+]
