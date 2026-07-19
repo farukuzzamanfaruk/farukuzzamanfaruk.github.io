@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Admin — Md Farukuzzaman Faruk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230B1F3A%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22%230D9488%22 font-family=%22Georgia,serif%22>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="unsupportedBanner" class="unsupported-banner" style="display:none;">
+  <strong>This browser doesn't support the File System Access API.</strong>
+  Open this admin panel in <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong> instead —
+  it's the only way this tool can save changes directly to your project files.
+</div>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <span class="initials">MF</span>
+      <div>
+        <div class="admin-brand-title">Portfolio Admin</div>
+        <div class="admin-brand-sub">Local content editor</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="openFolderBtn" style="width:100%;justify-content:center;margin-bottom:8px;">
+      📁 Open Project Folder
+    </button>
+    <div class="folder-status" id="folderStatus">No folder open yet</div>
+
+    <nav class="admin-nav" id="adminNav"></nav>
+
+    <div class="admin-sidebar-footer">
+      <button class="btn btn-ghost" id="copyPublishBtn" style="width:100%;justify-content:center;">📋 Copy publish commands</button>
+      <a class="btn btn-ghost" href="../index.html" target="_blank" style="width:100%;justify-content:center;margin-top:8px;">↗ View live site</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div id="toast" class="toast"></div>
+    <div id="panel" class="admin-panel">
+      <div class="empty-state">
+        <h2>Open your project folder to begin</h2>
+        <p>Click <strong>Open Project Folder</strong> and select the root of your portfolio
+          repository (the folder containing <code>index.html</code>). Your browser will ask
+          you to confirm access — this stays entirely on your machine, nothing is uploaded
+          anywhere.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

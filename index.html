@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md Farukuzzaman Faruk — PhD Student, Computer Science</title>
+<meta name="description" content="Md Farukuzzaman Faruk — PhD student in Computer Science at the University of Louisiana at Lafayette. Research in deep learning and deep learning systems optimization.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230B1F3A%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22%230D9488%22 font-family=%22Georgia,serif%22>F</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="#home" class="brand"><span class="initials">MF</span><span>Farukuzzaman Faruk</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#projects">Projects &amp; Service</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg id="themeIconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="home">
+    <div class="container">
+      <div>
+        <div class="hero-eyebrow"><span class="dot"></span> Available for research collaboration</div>
+        <h1>Md Farukuzzaman Faruk</h1>
+        <p class="hero-role" id="heroRole">PhD Student in Computer Science, School of Computing &amp; Informatics — University of Louisiana at Lafayette</p>
+        <p class="hero-tagline" id="heroTagline">Loading…</p>
+        <div class="hero-actions" id="heroActions"></div>
+        <div class="stat-grid" id="statGrid"></div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img id="heroPhoto" src="assets/img/profile/faruk-profile.jpg" alt="Md Farukuzzaman Faruk" width="320" height="320">
+        </div>
+        <div class="hero-photo-badge">
+          <img src="assets/img/logos/ull-logo.png" alt="University of Louisiana at Lafayette">
+          <span>Univ. of Louisiana<br>at Lafayette</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">About</div>
+        <h2>Objective</h2>
+      </div>
+      <div class="about-grid">
+        <p class="about-lede reveal" id="aboutObjective">Loading…</p>
+        <div class="about-supervisor reveal" id="supervisorCard"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Research</div>
+        <h2>Research Interests</h2>
+        <p>Working at the intersection of deep learning theory and the systems that make it run efficiently and reliably in the real world.</p>
+      </div>
+      <div class="pill-grid reveal" id="researchPills"></div>
+
+      <div style="margin-top:56px" class="reveal">
+        <h3 style="font-size:1rem;color:var(--text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;font-size:.8rem;margin-bottom:18px;">Technical Skills</h3>
+        <div class="skills-groups">
+          <div class="skill-group">
+            <h3>Languages</h3>
+            <div class="tag-row" id="skillLanguages"></div>
+          </div>
+          <div class="skill-group">
+            <h3>Frameworks</h3>
+            <div class="tag-row" id="skillFrameworks"></div>
+          </div>
+          <div class="skill-group">
+            <h3>Interpersonal</h3>
+            <div class="tag-row" id="skillInterpersonal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JOURNEY (Education + Experience) ============ -->
+  <section id="journey">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Journey</div>
+        <h2>Education &amp; Experience</h2>
+      </div>
+      <div class="two-col">
+        <div class="reveal">
+          <h3 style="font-size:1.1rem;margin-bottom:24px;">Education</h3>
+          <div class="timeline" id="educationTimeline"></div>
+        </div>
+        <div class="reveal">
+          <h3 style="font-size:1.1rem;margin-bottom:24px;">Experience <span style="font-weight:400;font-size:.85rem;color:var(--text-muted);" id="teachingYearsNote"></span></h3>
+          <div class="timeline" id="experienceTimeline"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Research Output</div>
+        <h2>Publications</h2>
+        <p>Peer-reviewed conference papers, journal articles, and book chapters in machine learning, deep learning, and medical image analysis.</p>
+      </div>
+
+      <div class="stat-grid" id="pubStatGrid" style="grid-template-columns:repeat(4,1fr);margin-top:0;margin-bottom:36px;"></div>
+
+      <div class="pub-chart-wrap reveal">
+        <svg id="pubChart" width="100%" height="180" role="img" aria-label="Publications per year"></svg>
+      </div>
+
+      <div class="pub-toolbar reveal">
+        <label class="pub-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="pubSearch" placeholder="Search by title, author, or venue…" aria-label="Search publications">
+        </label>
+        <select class="pub-select" id="pubYearFilter" aria-label="Filter by year">
+          <option value="">All years</option>
+        </select>
+      </div>
+
+      <div class="pub-list" id="pubList"></div>
+      <div class="pub-more" id="pubMoreWrap" style="display:none;">
+        <button class="btn btn-ghost" id="pubMoreBtn">Show all publications</button>
+      </div>
+      <p style="margin-top:28px;text-align:center;" class="reveal">
+        <a class="btn btn-outline" style="color:var(--accent-dark);border-color:var(--accent-dark);" id="scholarLink" href="#" target="_blank" rel="noopener">View full profile on Google Scholar →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ AWARDS ============ -->
+  <section id="awards">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Recognition</div>
+        <h2>Awards &amp; Honors</h2>
+      </div>
+      <div class="media-grid" id="awardsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS & SERVICE ============ -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Contributions</div>
+        <h2>Funded Projects &amp; Professional Service</h2>
+      </div>
+
+      <h3 style="font-size:1.05rem;margin-bottom:18px;" class="reveal">Funded Projects</h3>
+      <div class="project-list" id="projectList"></div>
+
+      <div style="margin-top:56px" class="reveal">
+        <h3 style="font-size:1.05rem;margin-bottom:24px;">Professional Service</h3>
+        <div class="service-grid" id="serviceGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Moments</div>
+        <h2>Professional Participation</h2>
+        <p>Conferences, ceremonies, and academic milestones.</p>
+      </div>
+      <div class="media-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ NEWS ============ -->
+  <section id="news">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Latest</div>
+        <h2>News &amp; Updates</h2>
+      </div>
+      <div class="news-list" id="newsList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ CONTACT / FOOTER ============ -->
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h2>Md Farukuzzaman Faruk</h2>
+        <p id="footerTagline">PhD Student in Computer Science, University of Louisiana at Lafayette.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div id="footerContact"></div>
+      </div>
+      <div class="footer-col">
+        <h4>Research &amp; Social</h4>
+        <div id="footerSocials"></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Md Farukuzzaman Faruk. All rights reserved.</span>
+      <span id="lastUpdated"></span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <figure>
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+</div>
+
+<script src="assets/js/data-loader.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
