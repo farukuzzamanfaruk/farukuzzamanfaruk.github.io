@@ -180,36 +180,60 @@ section + section { border-top: 1px solid var(--surface-border); }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent-dark); }
 .btn-sm { padding: 8px 14px; font-size: 0.85rem; }
 
-/* ---------- Nav ---------- */
+/* ---------- Nav ----------
+   Editorial/academic treatment: a small serif crest + nowrap wordmark,
+   and uppercase, tracked, underline-on-hover links rather than filled
+   pill buttons (which read more "app" than "faculty page"). */
 .site-nav {
   position: fixed; inset: 0 0 auto 0; height: var(--nav-h); z-index: 100;
-  background: rgba(11, 31, 58, 0.92); backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(9, 25, 47, 0.96); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: background var(--transition);
 }
-.site-nav .container { height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; gap: 12px; color: var(--navy-contrast); font-family: var(--font-heading); font-weight: 600; font-size: 1.05rem; }
-.brand .initials {
-  width: 38px; height: 38px; border-radius: 10px; background: var(--accent);
-  color: #052E29; display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-body); font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+.site-nav .container { max-width: 1360px; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+
+.brand { display: flex; align-items: center; gap: 10px; color: var(--navy-contrast); flex-shrink: 0; }
+.brand-crest {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid rgba(45,212,191,0.55); background: rgba(45,212,191,0.08);
+  color: var(--accent-on-navy); display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.01em;
 }
-.nav-links { display: flex; align-items: center; gap: 4px; }
+.brand-name {
+  font-family: var(--font-heading); font-weight: 600; font-size: 0.97rem;
+  letter-spacing: 0; white-space: nowrap; line-height: 1;
+}
+
+.nav-links { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; }
 .nav-links a {
-  padding: 8px 14px; border-radius: 999px; font-size: 0.92rem; font-weight: 500;
-  color: rgba(248,250,252,0.72); transition: color var(--transition), background var(--transition);
+  position: relative; display: inline-block; padding: 10px 9px;
+  font-family: var(--font-body); font-size: 0.71rem; font-weight: 600;
+  letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap;
+  color: rgba(226,232,240,0.6); transition: color var(--transition);
 }
-.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
-.nav-links a.active { color: #fff; background: rgba(13,148,136,0.28); }
+.nav-links a::after {
+  content: ""; position: absolute; left: 9px; right: 9px; bottom: 6px; height: 2px;
+  background: var(--accent-on-navy); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left; transition: transform 220ms ease;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a.active { color: #fff; }
+.nav-links a.active::after { transform: scaleX(1); }
+
 .nav-cv-link {
-  display: flex; align-items: center; gap: 6px; margin-left: 6px;
-  border: 1px solid rgba(45,212,191,0.5); color: var(--accent-on-navy) !important;
+  display: flex; align-items: center; gap: 5px; margin-left: 8px;
+  padding: 6px 12px !important; border-radius: 999px;
+  border: 1px solid rgba(45,212,191,0.45); color: var(--accent-on-navy) !important;
+  font-size: 0.68rem !important;
 }
-.nav-cv-link:hover { background: rgba(13,148,136,0.18) !important; border-color: var(--accent-on-navy); }
-@media (max-width: 900px) {
+.nav-cv-link::after { content: none; }
+.nav-cv-link:hover { background: rgba(13,148,136,0.16) !important; border-color: var(--accent-on-navy); }
+
+@media (max-width: 1130px) {
   .nav-cv-link { border-color: rgba(45,212,191,0.35); margin-left: 0; margin-top: 8px; justify-content: center; }
 }
-.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .theme-toggle {
   width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2);
   background: transparent; color: var(--navy-contrast); display: flex; align-items: center; justify-content: center;
@@ -220,7 +244,7 @@ section + section { border-top: 1px solid var(--surface-border); }
   background: transparent; color: var(--navy-contrast); align-items: center; justify-content: center;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1130px) {
   /* backdrop-filter on .site-nav would otherwise become the containing block
      for #navLinks (position:fixed), collapsing its height to the nav bar's
      own 72px instead of the full viewport below it. Disable it here. */
@@ -232,7 +256,12 @@ section + section { border-top: 1px solid var(--surface-border); }
     overflow-y: auto;
   }
   .nav-links.open { transform: translateX(0); }
-  .nav-links a { padding: 14px 12px; font-size: 1.02rem; }
+  .nav-links a {
+    padding: 14px 14px; font-size: 0.92rem; letter-spacing: 0.03em; border-radius: 8px;
+  }
+  .nav-links a::after { content: none; }
+  .nav-links a:hover { background: rgba(255,255,255,0.06); }
+  .nav-links a.active { background: rgba(13,148,136,0.22); }
   .nav-toggle { display: flex; }
 }
 
