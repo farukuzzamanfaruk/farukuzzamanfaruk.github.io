@@ -1,0 +1,19 @@
+#!/bin/sh
+# Stamps data/profile.json's "lastUpdated" field with today's date on every
+# commit, so the site footer's "Last updated" line never has to be maintained
+# by hand. Runs regardless of what changed or who's committing (Faruk, or
+# Claude Code on his behalf) -- git invokes hooks for every commit uniformly.
+#
+# One-time setup per clone/checkout: git config core.hooksPath .githooks
+# (already set on this machine's checkout).
+
+set -e
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+PROFILE="$REPO_ROOT/data/profile.json"
+TODAY=$(date +%Y-%m-%d)
+
+if [ -f "$PROFILE" ]; then
+  sed -i "s/\"lastUpdated\": \"[^\"]*\"/\"lastUpdated\": \"$TODAY\"/" "$PROFILE"
+  git add "$PROFILE"
+fi
