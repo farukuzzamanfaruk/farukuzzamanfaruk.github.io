@@ -5,6 +5,29 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-21 — CV correction: Funded Project [4] duration
+
+Funded Project [4] (Fake News Identification / multi-layer GRU) in
+`assets/cv/CV_FARUK.pdf` said `Duration: Ongoing`; corrected to
+`Duration: July 2024 to June 2025 (Completed)`, matching the wording of
+projects [1]–[3]. `data/projects.json` already had this right, so no data
+change was needed.
+
+**How it was done (no LaTeX source available):** the CV was compiled with
+MiKTeX/dvipdfmx and the `.tex` source isn't in this repo or on disk, so the
+text was patched directly in the PDF's page-8 content stream with pikepdf.
+Text is stored as hex glyph IDs (glyph = ASCII − 0x1C in the Roboto-Light
+subset); all needed glyphs (`J u l y 0 2 4 5 t o n e C m p d ( )`) were
+already in the embedded subset. Verified with `pdftotext` (only that one
+line differs across all 8 pages) and a rendered check. `Resources/CV/` and
+`assets/cv/` copies are identical.
+
+**Caveat:** if the CV is ever recompiled from the original LaTeX source,
+that source needs the same one-line fix or the change reverts. Left as-is
+(not corrected): the "Resposibily" typo in all four funded-project entries.
+
+---
+
 ## 2026-07-19 — Mobile/tablet compatibility audit
 
 User asked whether the site is fully compatible with phones and tablets.
