@@ -121,6 +121,7 @@
   document.addEventListener("click", (e) => {
     const card = e.target.closest(".media-card");
     if (!card) return;
+    if (card.tagName === "A") return; // linked cards (e.g. an award's source link) navigate natively
     const containerId = card.dataset.container;
     const idx = Number(card.dataset.idx);
     const item = window.__MEDIA__ && window.__MEDIA__[containerId] && window.__MEDIA__[containerId][idx];
@@ -130,6 +131,7 @@
     if (e.key !== "Enter" && e.key !== " ") return;
     const card = e.target.closest && e.target.closest(".media-card");
     if (!card) return;
+    if (card.tagName === "A") return; // let the browser handle Enter/Space on a real link natively
     e.preventDefault();
     card.click();
   });

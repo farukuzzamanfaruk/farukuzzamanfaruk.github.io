@@ -167,15 +167,22 @@
         ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.caption)}" loading="lazy">`
         : `<div class="media-frame no-image">${ICONS.image}</div>`;
       const frameWrap = item.image ? `<div class="media-frame">${frame}</div>` : frame;
-      return `<article class="card media-card reveal" data-idx="${i}" data-container="${containerId}" tabindex="${item.image ? 0 : -1}">
-        ${frameWrap}
+      const body = `${frameWrap}
         <div class="media-body">
           ${item.org ? `<div class="media-org">${escapeHtml(item.org)}</div>` : ""}
           <div class="media-title">${escapeHtml(item.title || item.caption)}</div>
           ${item.title && item.caption !== item.title ? `<div class="media-date" style="margin-top:2px;">${escapeHtml(item.caption)}</div>` : ""}
           ${item.date ? `<div class="media-date">${escapeHtml(item.date)}</div>` : ""}
-        </div>
-      </article>`;
+          ${item.link ? `<div class="media-link">${ICONS.arrow || ""} View source</div>` : ""}
+        </div>`;
+      // A linked item (e.g. an award with a source announcement) renders as a
+      // real <a> so the whole card is genuinely clickable/inspectable - not
+      // just a JS onclick handler. Items without a link keep the existing
+      // lightbox-on-click behavior (see the .media-card click delegate in
+      // main.js, which only opens the lightbox when there's no item.link).
+      return item.link
+        ? `<a class="card media-card reveal" href="${escapeHtml(item.link)}" target="_blank" rel="noopener" data-idx="${i}" data-container="${containerId}">${body}</a>`
+        : `<article class="card media-card reveal" data-idx="${i}" data-container="${containerId}" tabindex="${item.image ? 0 : -1}">${body}</article>`;
     }).join("");
   }
 

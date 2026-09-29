@@ -437,6 +437,12 @@ section + section { border-top: 1px solid var(--surface-border); }
 .media-org { font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-dark); font-weight: 700; }
 .media-title { margin-top: 6px; font-size: 0.98rem; font-weight: 600; line-height: 1.4; }
 .media-date { margin-top: 6px; font-size: 0.82rem; color: var(--text-faint); }
+.media-link { margin-top: 10px; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; color: var(--accent-dark); }
+.media-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+/* A media card can be a real <a> (see renderMediaGrid in data-loader.js) when
+   the item has a source link - reset anchor defaults so it matches the
+   <article>-based cards exactly. */
+a.media-card { display: block; color: inherit; text-decoration: none; }
 
 /* ---------- Lightbox ---------- */
 .lightbox {

@@ -5,6 +5,33 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — Live site: made the IEEE Best Paper Award card clickable
+
+Earlier today's "make it clickable" request was about the CV — this was
+actually about the live site's Awards section, which the user re-pasted
+(org/title/caption/date matching `data/awards.json`'s IEEE Best Paper
+Award entry exactly). Added a `"link"` field there pointing to RUET's
+own announcement of the award (same URL used in the CV fix).
+
+`renderMediaGrid` (`assets/js/data-loader.js`, shared by Awards and
+Gallery) now renders a card as a real `<a href>` when `item.link` is
+present — not just a JS onclick handler — so it's genuinely inspectable/
+right-clickable, with a "View source" affordance in the card body.
+Updated the `.media-card` click/keydown delegates in `main.js` to skip
+the lightbox-open behavior for `<a>` cards (avoids double-firing:
+lightbox popping open alongside the new-tab navigation). Cards without a
+link are unaffected — still open the photo lightbox as before. Added
+`a.media-card { display:block; ... }` in `style.css` since `<a>` is
+inline by default and would otherwise break the card layout.
+
+Tested locally with Playwright: the linked card renders as `<a>` with
+the correct `href`, clicking it opens the RUET page in a new tab
+(verified via `context.expect_page()`), and a regression check confirms
+the other 3 (non-linked) award cards still open the lightbox correctly.
+0 console errors.
+
+---
+
 ## 2026-09-29 — News: added Fall 2026 GTA appointment
 
 Added a `data/news.json` entry ("August 2026") for the new Fall 2026
