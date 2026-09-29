@@ -5,6 +5,61 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — CV: added 2 missing publications, recovered a real LaTeX source
+
+The CV's Publications list had 67 entries; Google Scholar (verified directly
+from the profile's raw HTML — "Articles 1–69", not an estimate) has 69.
+Cross-checked `Resources/Google Scholar All Publications/*.csv` and
+`data/publications.json` too — the website already had all 69 GS papers
+(plus one, the K-mer/DNA-methylation paper, that's on the CV and in the
+CSV but curiously isn't in GS's current listing — left alone, out of
+scope). Only the CV PDF was behind, missing both 2026 book chapters in
+*Machine Learning for Healthcare Informatics*:
+- "Large Ensemble of Transfer-Learned Models for Plant Disease Recognition
+  from Diverse Leaf Images" (author position 4/9) — inserted as new #6
+- "Preventing Skin Cancer through Improved Skin Lesion Recognition..."
+  (author position 7/8) — inserted as new #8
+
+Placement follows the site's own sort rule (year desc, author-position
+asc) and keeps items 1–5 (sole/first-authored papers) undisturbed, per
+user instruction. Items 6–67 renumbered to 9–69 accordingly. Author lists
+for the two new entries were pulled from Google Scholar's own citation
+detail pages, not guessed.
+
+**This is also the first CV edit done from a real, editable source**
+instead of hand-patching the compiled PDF (used for the two prior CV
+fixes above — that approach doesn't scale to structural changes like
+inserting entries mid-list, which reflows everything after). The user
+provided their original LaTeX template (a customized "1.5-column-cv",
+Roboto fonts, navy accent — `assets/CV-Latex-Template/main.tex`, kept
+untouched as reference). Rebuilt the CV's actual content on top of it,
+unchanged macros/styling, as `assets/CV-Latex-Template/CV_FARUK.tex`:
+- Header switched to centered/no-photo (matches the current live CV;
+  the template's original left-photo layout was for an older draft).
+- All other content (Objectives, Work Experience, Education, Skills,
+  Publications ×69, Training, Honors, Supervision, Funded Projects)
+  transcribed from the current PDF's own text — not retyped from memory —
+  via `pdftotext`, programmatically split into individual entries, and
+  cleaned of PDF-justification line-wrap hyphenation artifacts (e.g.
+  "Pre- dict" → "Predict") while preserving genuine compound hyphens
+  (e.g. "EEG-Based", "ResNet-101").
+- Compiles clean with XeLaTeX (MiKTeX): 0 errors, 0 overfull/underfull
+  box warnings, 9 pages (was 8). Verified against the rendered page
+  images, not just the log.
+
+**For future CV edits**: edit `assets/CV-Latex-Template/CV_FARUK.tex` and
+recompile with `xelatex CV_FARUK.tex` (run twice to settle references),
+then copy the resulting PDF to `Resources/CV/CV_FARUK.pdf` and
+`assets/cv/CV_FARUK.pdf`. No more raw PDF content-stream patching needed.
+Build artifacts (`.aux`/`.log`/`.out`/`.pdf` in that folder) are now
+gitignored — only the `.tex` files and icon/photo assets are tracked.
+
+**Not touched / left as-is:** the "Resposibily" typo (→ "Responsibility")
+in all four Funded Projects entries — a real typo, but outside what was
+asked; flagging in case it should be fixed next.
+
+---
+
 ## 2026-09-29 — CV correction: Assistant Professor end date
 
 Work-experience entry "Assistant Professor, RUET" said `Jul 2022 – Jul

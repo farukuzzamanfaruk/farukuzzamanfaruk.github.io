@@ -1,0 +1,907 @@
+% vim: set textwidth=120:
+
+% Example CV based on the 1.5-column-cv template. Main features:
+% * uses the Roboto font family and IcoMoon icon set;
+% * doesn't use colours, different font weights are used instead for styling;
+% * because the CV fits on one page, header and footer is empty, since there isn't much useful info to put there;
+% * includes a photo.
+\documentclass[a4paper,10pt]{article}
+
+
+% package imports
+% ---------------
+
+\usepackage[british]{babel} % for correct language and hyphenation and stuff
+\usepackage{calc}           % for easier length calculations (infix notation)
+\usepackage{enumitem}       % for configuring list environments
+\usepackage{fancyhdr}       % for setting header and footer
+\usepackage{fontspec}       % for fonts
+\usepackage{geometry}       % for setting margins (\newgeometry)
+\usepackage{graphicx}       % for pictures
+\usepackage{microtype}      % for microtypography stuff
+\usepackage{xcolor}         % for colours
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+
+% margin and column widths
+% ------------------------
+
+% margins
+\newgeometry{left=15mm,right=15mm,top=15mm,bottom=15mm}
+
+% width of the gap between left and right column
+\newlength{\cvcolumngapwidth}
+\setlength{\cvcolumngapwidth}{3.5mm}
+
+% left column width
+\newlength{\cvleftcolumnwidth}
+\setlength{\cvleftcolumnwidth}{44.5mm}
+
+% right column width
+\newlength{\cvrightcolumnwidth}
+\setlength{\cvrightcolumnwidth}{\textwidth-\cvleftcolumnwidth-\cvcolumngapwidth}
+
+% set paragraph indentation to 0, because it screws up the whole layout otherwise
+\setlength{\parindent}{0mm}
+
+
+% style definitions
+% -----------------
+% style categories explanation:
+% * \cvnameXXX is used for the name;
+% * \cvsectionXXX is used for section names (left column, accompanied by a horizontal rule);
+% * \cvtitleXXX is used for job/education titles (right column);
+% * \cvdurationXXX is used for job/education durations (left column);
+% * \cvheadingXXX is used for headings (left column);
+% * \cvmainXXX (and \setmainfont) is used for main text;
+% * \cvruleXXX is used for the horizontal rules denoting sections.
+
+% font families
+\defaultfontfeatures{Ligatures=TeX} % reportedly a good idea, see https://tex.stackexchange.com/a/37251
+
+\newfontfamily{\cvnamefont}{Roboto Medium}
+\newfontfamily{\cvsectionfont}{Roboto Medium}
+\newfontfamily{\cvtitlefont}{Roboto Medium}
+\newfontfamily{\cvdurationfont}{Roboto Light Italic}
+\newfontfamily{\cvheadingfont}{Roboto Medium}
+\setmainfont{Roboto Light}
+
+% colours
+\definecolor{cvnamecolor}{HTML}{00008e}
+\definecolor{cvsectioncolor}{HTML}{00008e}
+\definecolor{cvtitlecolor}{HTML}{000000}
+\definecolor{cvdurationcolor}{HTML}{555555}
+\definecolor{cvheadingcolor}{HTML}{000000}
+\definecolor{cvmaincolor}{HTML}{000000}
+\definecolor{cvrulecolor}{HTML}{000000}
+
+\color{cvmaincolor}
+
+% styles
+\newcommand{\cvnamestyle}[1]{{\Large\cvnamefont\textcolor{cvnamecolor}{#1}}}
+\newcommand{\cvsectionstyle}[1]{{\normalsize\cvsectionfont\textcolor{cvsectioncolor}{#1}}}
+\newcommand{\cvtitlestyle}[1]{{\large\cvtitlefont\textcolor{cvtitlecolor}{#1}}}
+\newcommand{\cvdurationstyle}[1]{{\small\cvdurationfont\textcolor{cvdurationcolor}{#1}}}
+\newcommand{\cvheadingstyle}[1]{{\normalsize\cvheadingfont\textcolor{cvheadingcolor}{#1}}}
+
+
+% inter-item spacing
+% ------------------
+
+% vertical space after personal info and standard CV items
+\newlength{\cvafteritemskipamount}
+\setlength{\cvafteritemskipamount}{5mm plus 1.25mm minus 1.25mm}
+
+% vertical space after sections
+\newlength{\cvaftersectionskipamount}
+\setlength{\cvaftersectionskipamount}{2mm plus 0.5mm minus 0.5mm}
+
+% extra vertical space to be used when a section starts with an item with a heading (e.g. in the skills section),
+% so that the heading does not follow the section name too closely
+\newlength{\cvbetweensectionandheadingextraskipamount}
+\setlength{\cvbetweensectionandheadingextraskipamount}{1mm plus 0.25mm minus 0.25mm}
+
+
+% intra-item spacing
+% ------------------
+
+% vertical space after name
+\newlength{\cvafternameskipamount}
+\setlength{\cvafternameskipamount}{3mm plus 0.75mm minus 0.75mm}
+
+% vertical space after personal info lines
+\newlength{\cvafterpersonalinfolineskipamount}
+\setlength{\cvafterpersonalinfolineskipamount}{2mm plus 0.5mm minus 0.5mm}
+
+% vertical space after titles
+\newlength{\cvaftertitleskipamount}
+\setlength{\cvaftertitleskipamount}{1mm plus 0.25mm minus 0.25mm}
+
+% value to be used as parskip in right column of CV items and itemsep in lists (same for both, for consistency)
+\newlength{\cvparskip}
+\setlength{\cvparskip}{0.5mm plus 0.125mm minus 0.125mm}
+
+% set global list configuration (use parskip as itemsep, and no separation otherwise)
+\setlist{parsep=0mm,topsep=0mm,partopsep=0mm,itemsep=\cvparskip}
+
+
+% CV commands
+% -----------
+
+% creates a "personal info" CV item with the given left and right column contents, with appropriate vertical space after
+% @param #1 left column content (should be the CV photo)
+% @param #2 right column content (should be the name and personal info)
+\newcommand{\cvpersonalinfo}[2]{
+    % left and right column
+    \begin{minipage}[t]{\cvleftcolumnwidth}
+        \vspace{0mm} % XXX hack to align to top, see https://tex.stackexchange.com/a/11632
+        \raggedleft #1
+    \end{minipage}% XXX necessary comment to avoid unwanted space
+    \hspace{\cvcolumngapwidth}% XXX necessary comment to avoid unwanted space
+    \begin{minipage}[t]{\cvrightcolumnwidth}
+        \vspace{0mm} % XXX hack to align to top, see https://tex.stackexchange.com/a/11632
+        #2
+    \end{minipage}
+
+    % space after
+    \vspace{\cvafteritemskipamount}
+}
+
+% typesets a name, with appropriate vertical space after
+% @param #1 name text
+\newcommand{\cvname}[1]{
+    % name
+    \cvnamestyle{#1}
+
+    % space after
+    \vspace{\cvafternameskipamount}
+}
+
+% typesets a line of personal info beginning with an icon, with appropriate vertical space after
+% @param #1 parameters for the \includegraphics command used to include the icon
+% @param #2 icon filename
+% @param #3 line text
+\newcommand{\cvpersonalinfolinewithicon}[3]{
+    % icon, vertically aligned with text (see https://tex.stackexchange.com/a/129463)
+    \raisebox{.5\fontcharht\font`E-.5\height}{\includegraphics[#1]{#2}}
+    % text
+    #3
+
+    % space after
+    \vspace{\cvafterpersonalinfolineskipamount}
+}
+
+% creates a "section" CV item with the given left column content, a horizontal rule in the right column, and with
+% appropriate vertical space after
+% @param #1 left column content (should be the section name)
+\newcommand{\cvsection}[1]{
+    % left and right column
+    \begin{minipage}[t]{\cvleftcolumnwidth}
+        \raggedleft\cvsectionstyle{#1}
+    \end{minipage}% XXX necessary comment to avoid unwanted space
+    \hspace{\cvcolumngapwidth}% XXX necessary comment to avoid unwanted space
+    \begin{minipage}[t]{\cvrightcolumnwidth}
+        \textcolor{cvrulecolor}{\rule{\cvrightcolumnwidth}{0.3mm}}
+    \end{minipage}
+
+    % space after
+    \vspace{\cvaftersectionskipamount}
+}
+
+% creates a standard, multi-purpose CV item with the given left and right column contents, parskip set to cvparskip
+% in the right column, and with appropriate vertical space after
+% @param #1 left column content
+% @param #2 right column content
+\newcommand{\cvitem}[2]{
+    % left and right column
+    \begin{minipage}[t]{\cvleftcolumnwidth}
+        \raggedleft #1
+    \end{minipage}% XXX necessary comment to avoid unwanted space
+    \hspace{\cvcolumngapwidth}% XXX necessary comment to avoid unwanted space
+    \begin{minipage}[t]{\cvrightcolumnwidth}
+        \setlength{\parskip}{\cvparskip} #2
+    \end{minipage}
+
+    % space after
+    \vspace{\cvafteritemskipamount}
+}
+
+% typesets a title, with appropriate vertical space after
+% @param #1 title text
+\newcommand{\cvtitle}[1]{
+    % title
+    \cvtitlestyle{#1}
+
+    % space after
+    \vspace{\cvaftertitleskipamount}
+    % XXX need to subtract cvparskip here, because it is automatically inserted after the title "paragraph"
+    \vspace{-\cvparskip}
+}
+
+
+% header and footer
+% -----------------
+
+% set empty header and footer
+\pagestyle{empty}
+
+
+
+% preamble end/document start
+% ===========================
+
+\begin{document}
+
+
+% personal info (centered header; current CV has no photo)
+% -----------------------------------------------------
+\begin{center}
+{\Large\cvnamefont\textcolor{cvnamecolor}{Md Farukuzzaman Faruk}}
+
+\vspace{2mm}
+{\normalsize PhD Student in Computer Science, School of Computing \& Informatics, University of Louisiana at Lafayette}
+
+\vspace{2mm}
+\raisebox{-.15em}{\includegraphics[height=3.2mm]{067-phone.pdf}}~+1 337-557-3009
+\qquad
+\raisebox{-.15em}{\includegraphics[height=3.2mm]{070-envelop.pdf}}~md-farukuzzaman.faruk1@louisiana.edu, faarukuzzaman@gmail.com
+
+\vspace{1mm}
+\raisebox{-.15em}{\includegraphics[height=3.2mm]{1011424-internet.png}}~\href{https://scholar.google.com/citations?user=NAE84dMAAAAJ&hl=en}{Google Scholar}
+\qquad
+\raisebox{-.15em}{\includegraphics[height=3.2mm]{458-linkedin.pdf}}~\href{https://www.linkedin.com/in/md-farukuzzaman-faruk-269584132}{LinkedIn}
+\end{center}
+
+\vspace{\cvafteritemskipamount}
+
+\cvsection{OBJECTIVES}
+\cvitem{
+    \cvdurationstyle{}
+}
+{
+I want to build a career as a computer science researcher and educator, working at the crossroads of academic inquiry and industry application. My focus is on advancing AI systems that are reliable, transparent, and genuinely useful --- bridging the gap between what we discover in the lab and what actually works in the world.}
+
+
+% work experience
+% ---------------
+
+\cvsection{WORK EXPERIENCE}
+
+\cvitem{
+    \cvdurationstyle{}
+}{\textbf{Total Teaching Experience: 7+ Years}}
+
+\cvitem{
+    \cvdurationstyle{Aug 2025 -- Current}
+}{
+    \cvtitle{Graduate Teaching Assistant $\cdot$ Full Time}
+
+    School of Computing \& Informatics,\\
+    University of Louisiana at Lafayette, LA, USA.
+}
+
+\cvitem{
+    \cvdurationstyle{Jul 2022 -- Aug 2025}
+}{
+    \cvtitle{Assistant Professor $\cdot$ Full Time}
+
+    Department of Computer Science \& Engineering,\\
+    RUET, Rajshahi-6204, Bangladesh.
+}
+
+\cvitem{
+    \cvdurationstyle{Nov 2019 -- Jul 2022}
+}{
+    \cvtitle{Lecturer $\cdot$ Full Time}
+
+    Department of Computer Science \& Engineering,\\
+    RUET, Rajshahi-6204, Bangladesh.
+}
+
+\cvitem{
+    \cvdurationstyle{Feb 2019 -- Oct 2019}
+}{
+    \cvtitle{Lecturer $\cdot$ Full Time}
+
+    Department of Computer Science \& Engineering,\\
+    Varendra University, Rajshahi, Bangladesh.
+}
+
+% education
+% ---------
+
+\cvsection{EDUCATION}
+
+\cvitem{
+    \cvdurationstyle{2025 -- Ongoing}
+}{
+    \cvtitle{PhD in Computer Science}
+
+    School of Computing \& Informatics,\\
+    University of Louisiana at Lafayette, LA, USA.
+
+    \textbf{PhD Supervisor:} Dr. Li Chen, Associate Professor, School of Computing and Informatics, University of Louisiana at Lafayette, LA, USA.
+}
+
+\cvitem{
+    \cvdurationstyle{2019 -- 2021}
+}{
+    \cvtitle{Master of Science in Computer Science \& Engineering}
+    CGPA: \textbf{3.92} (out of 4.00)\\
+    Department of Computer Science \& Engineering, RUET, Rajshahi-6204, Bangladesh.
+
+    \textbf{Thesis Topic:} Deep Convolutional Neural Network-based Medical Images Analysis.\\
+    \textbf{Supervisor:} Prof. Dr. Md. Rabiul Islam, Dept. of CSE, RUET.
+}
+
+\cvitem{
+    \cvdurationstyle{2014 -- 2018}
+}{
+    \cvtitle{Bachelor of Science in Computer Science \& Engineering}
+    CGPA: \textbf{3.90} (out of 4.00), Position: \textbf{Third} (Out of 106 Students)\\
+    Department of Computer Science \& Engineering, RUET, Rajshahi-6204, Bangladesh.
+
+    \textbf{Thesis Topic:} Prediction of DNA Methylation Status Using Support Vector Machine.
+}
+
+
+% skills
+% ------
+
+\cvsection{SKILLS \& INTERESTS}
+
+\vspace{\cvbetweensectionandheadingextraskipamount}
+
+\cvitem{
+    \cvheadingstyle{Research Interests}
+}{
+    Machine Learning, Deep Learning, Large Language Models, Medical Image Processing
+}
+
+\cvitem{
+    \cvheadingstyle{Languages}
+}{
+    English -- Full professional proficiency
+}
+
+\cvitem{
+    \cvheadingstyle{Interpersonal Skills}
+}{
+    Presentation, Documentation, Public Speaking, Time and Event Management
+}
+
+\cvitem{
+    \cvheadingstyle{Programming Languages}
+}{
+    C, C++, Python, PHP, JAVA, JavaScript
+}
+
+\cvitem{
+    \cvheadingstyle{Platforms/Frameworks}
+}{
+    PyTorch, TensorFlow
+}
+
+% publications
+% ------------
+
+\cvsection{PUBLICATIONS}
+
+\cvitem{
+    \cvheadingstyle{Publications}
+}{
+1. Md. Farukuzzaman Faruk, Md. Rabiul Islam, and Emrana Kabir Hashi. “Screening Pathological Abnormalities in Gastrointestinal Images Using Deep Ensemble Transfer Learning.” In 2022 25th International Conference on Computer and Information Technology (ICCIT), pp. 230–235. IEEE, 2022.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+2. Farukuzzaman Faruk. “VGGCovidNet: A Deep Convolutional Neural Network to Predict COVID-19 Cases from X-Ray Images.” In 2021 International Conference on Automation, Control and Mechatronics for Industry 4.0 (ACMI), pp. 1–6. IEEE, 2021.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+3. Farukuzzaman Faruk. “RGU-Net: Residual Guided U-Net Architecture for Automated Segmentation of COVID-19 Anomalies Using CT Images.” In 2021 International Conference on Automation, Control and Mechatronics for Industry 4.0 (ACMI), pp. 1–6. IEEE, 2021.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+4. Md. Farukuzzaman Faruk. “ResidualCovid-Net: An Interpretable Deep Network to Screen COVID-19 Utilizing Chest CT Images.” In 2021 3rd International Conference on Electrical \& Electronic Engineering (ICEEE), pp. 69–72. IEEE, 2021.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+5. Md. Farukuzzaman Faruk and Abu Sayeed. “K-mer Based DNA Methylation Status Prediction Using Support Vector Machine.” In 2019 3rd International Conference on Electrical, Computer \& Telecommunication Engineering (ICECTE), pp. 229–232. IEEE, 2019. (Received IEEE Bangladesh Section Best Paper Award)
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+6. Maria Chowdhury, Azmain Yakin Srizon, Tahsen Islam Sajon, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Ananya Sarker, Md. Al Mamun, Md. Rakibul Haque, and Md. Rakib Hossain. “Large Ensemble of Transfer-Learned Models for Plant Disease Recognition from Diverse Leaf Images.” In Machine Learning for Healthcare Informatics, pp. 146–160. Chapman and Hall/CRC, 2026.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+7. Mahjabin Rahman Oishe, SM Mahedy Hasan, Azmain Yakin Srizon, Anwar Hossain Efat, Nahrin Jannat, Mostarina Mitu, and Md. Farukuzzaman Faruk. “Enhancing Glaucoma Prediction Performance in OCT Images Using Machine Learning Based on HOG Features.” In Visual Sensing and Ubiquitous Computing, pp. 91–104. CRC Press, 2026.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+8. Anwar Hossain Efat, SM Mahedy Hasan, Nahrin Jannat, Mahjabin Rahman Oishe, Md. Fakrul Taraque, Mostarina Mitu, Md. Farukuzzaman Faruk, and Azmain Yakin Srizon. “Preventing Skin Cancer through Improved Skin Lesion Recognition: An Attention-Triplet and Multi-Layer Ensemble-Based CNN Approach.” In Machine Learning for Healthcare Informatics, pp. 95–112. Chapman and Hall/CRC, 2026.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+9. Most Thasin Sabira, Md. Farukuzzaman Faruk, Md. Nasif Osman Khansur, Azmain Yakin Srizon, and SM Mahedy Hasan. “Weighted Densenet Ensemble with Transformer Encoder and External Attention for Gastrointestinal Disease Classification.” In 2025 2nd International Conference on Next-Generation Computing, IoT and Machine Learning (NCIM), pp. 1–6. IEEE, 2025.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+10. Kawshik Banerjee, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, SM Mahedy Hasan, and Md. Rakib Hossain. “Quantifying Shifts in Word Contexts from Social Media Data.” In Data-Driven Applications for Emerging Technologies, pp. 31–42. CRC Press, 2025.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+11. Sirajam Samira, Md. Farukuzzaman Faruk, Md. Nazmul Islam, SM Mahedy Hasan, Md. Al Mamun, Azmain Yakin Srizon, and Md. Rakib Hossain. “Enhancing Gastrointestinal Diagnosis: CBAM-Integrated CNN for High-Precision Multi-Class Anatomical Landmark Identification.” In 2024 Second International Conference on Emerging Trends in Information Technology and Engineering (ICETITE), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+12. Abu Sayeed, Nasif Osman Khansur, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, Salem A. Alyami, A.K.M. Azad, and Mohammad Ali Moni. “An effective screening of COVID-19 pneumonia by employing chest X-ray segmentation and attention-based ensembled classification.” IET Image Processing, vol. 18, no. 9, pp. 2400–2416. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+13. Tushar Das, SM Mahedy Hasan, Anwar Hossain Efat, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Md. Al Mamun, and Md. Rakib Hossain. “Towards Superior EEG-Based Emotion Recognition: Integrating CNN Outputs with Machine Learning Classifiers for Enhanced Performance.” In 2024 6th International Conference on Electrical Engineering and Information \& Communication Technology (ICEEICT), pp. 699–704. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+14. Ishmam Khan, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, Md. Al Mamun, SM Mahedy Hasan, Md. Nazmul Islam, Md. Rakib Hossain, and Md. Faruk Hossain. “Leveraging the Robust Capability of Modified Multi-Layer Gated Recurrent Units for Fake News Detection.” In 2024 6th International Conference on Electrical Engineering and Information \& Communication Technology (ICEEICT), pp. 986–991. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+15. Barsha Roy, Md. Farukuzzaman Faruk, Md. Nazmul Islam, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Al Mamun, Md. Rakib Hossain, and Md. Faruk Hossain. “A Cutting-Edge Ensemble of Vision Transformer and ResNet101v2 Based Transfer Learning for the Precise Classification of Leukemia Sub-types from Peripheral Blood Smear Images.” In 2024 6th International Conference on Electrical Engineering and Information \& Communication Technology (ICEEICT), pp. 49–54. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+16. Ashraf UI Alam, Sudipta Progga Islam, SM Mahedy Hasan, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, Md. Al Mamun, and Md. Rakib Hossain. “Optic Disc and Cup Segmentation via Enhanced U-Net with Residual and Attention Mechanisms.” In 2024 6th International Conference on Electrical Engineering and Information \& Communication Technology (ICEEICT), pp. 329–334. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+17. Israt Jahan, Anwar Hossain Efat, SM Mahedy Hasan, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Md. Rakib Hossain, and Md. Al Mamun. “An Explainable Deep Learning Framework for Multi-Class Skin Lesion Classification While Resolving Class Imbalance.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 473–478. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+18. SM Ruhan Kabir, Azmain Yakin Srizon, Nishat Tasnim Esha, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Md. Nasif Khansur, and Md. Mazharul Islam. “Student Distraction Detection and Concentration Analysis via Transfer Learned Convolutional Neural Networks.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+19. Jannatul Ferdaues, Md. Muhaiminul Islam, Md. Rakib Hossain, Farzana Akter, SM Mahedy Hasan, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, and Md. Faruk Hossain. “The Design and Analysis of 5G mmWave Backhaul Communication Channels with Human Obstruction and Blockage Considerations.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 6–11. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+20. Pranab Roy, Anwar Hossain Efat, SM Mahedy Hasan, Azmain Yakin Srizon, Md. Rakib Hossain, Md. Farukuzzaman Faruk, and Md. Al Mamun. “Multi-Scale Feature Fusion Framework Based on Attention Integrated Customized DenseNet201 Architecture for Multi-Class Skin Lesion Detection.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 496–501. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+21. Taifur Rahman, Md. Farukuzzaman Faruk, Md. Nasif Khansur, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Al Mamun, and Md. Faruk Hossain. “3D CNN with Attention Modules for Enhanced COVID-19 and Pneumonia Screening from CT Scans.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 613–618. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+22. Shuvam Agarwala, Md. Sumon Ali, Afifa Tasneem Quanita, ASM Shahiduzzaman Sajid, Azmain Yakin Srizon, Nishat Tasnim Esha, Md. Farukuzzaman Faruk, and SM Mahedy Hasan. “Precision Death Forecasting of Dengue Outbreaks in Bangladesh by Blending Statistical and Machine Learning Models.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 981–986. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+23. Mostafizur Rahman, Shuvam Agarwala, Azmain Yakin Srizon, Nishat Tasnim Esha, Md. Farukuzzaman Faruk, SM Mahedy Hasan, and Md. Nasif Khansur. “A Cost-Effective Approach to Bengali Handwritten Character Recognition with Custom Convolutional Neural Network.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 894–899. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+24. MD Mesbahuddin Hasib, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Md. Al Mamun, Azmain Yakin Srizon, Anwar Hossain Efat, Md. Rakib Hossain, and Md. Nasif Khansur. “Improved Skin Lesion Detection with Double Layer Concatenated DenseNet Using Transfer Learning and Attention Modules.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+25. Md. Sakhawat Hossain, SM Mahedy Hasan, Md. Al Mamun, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, and Md. Rakib Hossain. “Optimizing Depth and Ego-Motion Estimation with Swin Transformer: A Comprehensive Study.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 987–992. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+26. Tirthankar Halder, Azmain Yakin Srizon, Nishat Tasnim Esha, SM Mahedy Hasan, Md. Farukuzzaman Faruk, and Md. Rakib Hossain. “Enhancing Email Safety: Harnessing ML, DL, and LLM Models for Spam Detection.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+27. Tomal Tahsin Ahmmed, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Nasif Khansur, Anwar Hossain Efat, Md. Rakib Hossain, and Md. Al Mamun. “Shallow Tuned DenseNet: A Lightweight Convolutional Neural Network Approach for Enhanced Skin Lesion Recognition.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+28. Shuvam Agarwala, Sonia Agarwala, Azmain Yakin Srizon, SM Mahedy Hasan, Nishat Tasnim Esha, and Farukuzzaman Faruk. “Uncovering Patterns of Depression in Engineering and Medical Students Using Machine Learning.” In 2024 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON), pp. 921–926. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+29. Md. Ahsanul Karim Abir, Anwar Hossain Efat, SM Mahedy Hasan, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, Md. Rakib Hossain, and Md. Al Mamun. “Attention Enhanced Inception-V3: A Multi-Scale Feature Fusion Network for Skin Lesion Detection with Explainable Artificial Intelligence.” In 2024 International Conference on Innovations in Science, Engineering and Technology (ICISET), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+30. Md. Masum Mia, Anwar Hossain Efat, SM Mahedy Hasan, Md. Rakib Hossain, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, and Md. Al Mamun. “Exploring Augmentation Strategies for Balanced Skin Lesion Classification: An Explainable Lightly Tuned DenseNet 169 Architecture.” In 2024 International Conference on Innovations in Science, Engineering and Technology (ICISET), pp. 1–6. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+31. Most Thasin Sabira, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Azmain Yakin Srizon, Md. Nasif Khansur, Md. Al Mamun, and Md. Rakib Hossain. “Bengali Handwritten Character Recognition Enhanced with Morphological Preprocessing and Attention Mechanism-based Convolutional Neural Network.” In Proceedings of the 3rd International Conference on Computing Advancements (ICA), pp. 513–519. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+32. Shakil Mahmud Shuvo, Navia Novely, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, and SM Mahedy Hasan. “Early Detection of Suicidal Ideation Using Bidirectional GRU and Language Models.” In Proceedings of the 3rd International Conference on Computing Advancements (ICA), pp. 482–490. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+33. Soumit Das, Md. Farukuzzaman Faruk, Shakil Mahmud Shuvo, Azmain Yakin Srizon, SM Mahedy Hasan, and Md. Al Mamun. “Advancing Glioma Segmentation: A Robust 3D Residual Attention U-Net Framework for Multimodal MRI Images.” In Proceedings of the 3rd International Conference on Computing Advancements (ICA), pp. 978–985. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+34. Navia Novely, Shakil Mahmud Shuvo, and Md. Farukuzzaman Faruk. “Improving Pre-Trained CNNs with CBAM and Skip Connections for Multi-Class Retinal Diseases Classification using OCT Images.” In Proceedings of the 3rd International Conference on Computing Advancements (ICA), pp. 946–953. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+35. Rafi Ahammed Songram, SM Mahedy Hasan, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, Md. Rakib Hossain, and Md. Al Mamun. “RAS-bengaliNet: An Explainable Lightweight Convolutional Neural Network for Handwritten Bangla Compound Characters Recognition.” In Proceedings of the 3rd International Conference on Computing Advancements (ICA), pp. 902–909. 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+36. Shuvam Agarwala, Afifa Tasneem Quanita, Onik Jahan Sagor, ASM Shahiduzzaman Sajid, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, and SM Mahedy Hasan. “Leveraging Deep Learning and Feature Extraction for Robust Anomaly Detection in Network Traffic.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 2208–2213. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+37. Md. Ariful Islam, Md. Farukuzzaman Faruk, Mohammod Abdul Motin, SM Mahedy Hasan, Azmain Yakin Srizon, and Md. Nazmul Islam. “Multichannel EEG-Based Motor Movement Classification Using Fusion of 1D-CNN and Attention Mechanism.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 933–938. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+38. SM Mahedy Hasan, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Md. Ali Hossain, and Md. Al Mamun. “Cost-Sensitive Lightweight Waste Classification Using Modified EfficientNetB0 and Parallel CNNs for Resource-Constrained Environments.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 1212–1217. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+39. Md. Minhazul Islam, Md. Tanbeer Jubaer, Azmain Yakin Srizon, Md. Ali Hossain, Md. Farukuzzaman Faruk, SM Mahedy Hasan, A.F.M. Minhazur Rahman, and Nishat Tasnim Esha. “Explainable AI-Driven Improved Disease Prediction through Symptom Analysis with Custom BERT.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 2327–2332. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+40. Md. Minhazul Islam, Md. Rakib Hossain, Md. Musab Us Saber Shakin, SM Mahedy Hasan, Farzana Akter, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, and Md. Faruk Hossain. “Enhanced Knee Osteoarthritis Classification using a Modified EfficientNetB5 Architecture with Self-Attention Mechanism.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 257–262. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+41. Md. Nazmul Islam, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Al Mamun, Md. Ali Hossain, and Md. Ariful Islam. “HSV-Driven Light-Weight CNN Architecture: Balancing Computational Complexity and Diagnostic Precision in Cervical Cancer Detection.” In 2024 27th International Conference on Computer and Information Technology (ICCIT), pp. 1182–1187. IEEE, 2024.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+42. Tahsen Islam Sajon, Maria Chowdhury, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Abu Sayeed, and A.F.M. Minhazur Rahman. “Recognition of Leukemia Sub-types Using Transfer Learning and Extraction of Distinguishable Features Using an Effective Machine Learning Approach.” In 2023 International Conference on Electrical, Computer and Communication Engineering (ECCE), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+43. Nahrin Jannat, SM Mahedy Hasan, Anwar Hossain Efat, Md. Fakrul Taraque, Mostarina Mitu, Md. Al Mamun, and Md. Farukuzzaman Faruk. “Stacking Ensemble Technique for Multiple Medical Datasets Classification: A Generalized Prediction Model.” In 2023 International Conference on Electrical, Computer and Communication Engineering (ECCE), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+44. Azmain Yakin Srizon, Ananya Sarker, Md. Al Mamun, Md. Farukuzzaman Faruk, and SM Mahedy Hasan. “Enhancing Waste Categorization Using Ensemble of Transfer Learning and Light-Weight Convolutional Neural Network.” In 2023 International Conference on Next-Generation Computing, IoT and Machine Learning (NCIM), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+45. Anirban Barai, Md. Farukuzzaman Faruk, Shakil Mahmud Shuvo, Azmain Yakin Srizon, SM Mahedy Hasan, and Abu Sayeed. “A Late Fusion Deep CNN Model for the Classification of Brain Tumors from Multi-Parametric MRI Images.” In 2023 International Conference on Next-Generation Computing, IoT and Machine Learning (NCIM), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+46. Sheikh Fazle Rabbi, Md. Al Mamun, Md. Farukuzzaman Faruk, SM Mahedy Hasan, and Azmain Yakin Srizon. “A Multi-branch and Attention Based CNN Architecture for the Classification of Retinal Diseases from OCT Images.” In 2023 International Conference on Information and Communication Technology for Sustainable Development (ICICT4SD), pp. 36–40. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+47. Nahrin Jannat, SM Mahedy Hasan, Azmain Yakin Srizon, Mahjabin Oishe, Anwar Hossain Efat, Md. Fakrul Taraque, Mostarina Mitu, and Md. Farukuzzaman Faruk. “Efficient Detection of Crop Leaf Diseases: A Lightweight Convolutional Neural Network Approach for Enhanced Agricultural Productivity.” In 2023 International Conference on Information and Communication Technology for Sustainable Development (ICICT4SD), pp. 99–103. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+48. Soumik Datta, SM Mahedy Hasan, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Md. Rakib Hossain, Anwar Hossain Efat, and Mostarina Mitu. “Improved Diabetes Prediction with Reduced Feature Sets: Evaluating Feature Selection Techniques in Machine Learning.” In 2023 International Conference on Information and Communication Technology for Sustainable Development (ICICT4SD), pp. 104–108. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+49. SM Mahedy Hasan, Md. Al Mamun, Md. Farukuzzaman Faruk, and Azmain Yakin Srizon. “Ensemble of Deep Convolutional Neural Networks for Multi-Class Skin Lesion Recognition Using Soft Attention.” In 2023 International Conference on Information and Communication Technology for Sustainable Development (ICICT4SD), pp. 65–69. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+50. Rezwanul Haque, SM Mahedy Hasan, Azmain Yakin Srizon, Anwar Hossain Efat, Md. Farukuzzaman Faruk, Mahjabin Oishe, Nahrin Jannat, and Mostarina Mitu. “Evaluating the Efficacy of Feature Selection Methods in Cardiovascular Disease Prediction with Machine Learning.” In 2023 6th International Conference on Electrical Information and Communication Technology (EICT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+51. Md. Sabbir Hossain, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Shariful Chowdhury, Md. Rakib Hossain, Md. Nazmul Islam, and Md. Faruk Hossain. “A Customized 3D CNN Integrated with Convolutional Block Attention Module for Precise Diagnosis of COVID-19 and Pneumonia from CT Scan Images.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+52. Md. Hedayatul Islam, Md. Rakib Hossain, Farzana Akter, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Farukuzzaman Faruk, and Md. Minhazul Islam. “Enhanced Brain Tumor Segmentation: A Study on the Efficacy of Multi-Model Ensembling Utilizing Diverse Backbones.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+53. Md. Minhazul Islam, SM Mahedy Hasan, Md. Rakib Hossain, Azmain Yakin Srizon, Farzana Akter, Md. Farukuzzaman Faruk, and Sheikh Shraboni Akter. “Channel Attention-Guided Lightweight CNN Meets Extreme Learning Machine: Multi-Class Crop Leaf Disease Classification with Explainable AI.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+54. Shahriar Emon, Md. Rakib Hossain, SM Mahedy Hasan, Azmain Yakin Srizon, Farzana Akter, Md. Farukuzzaman Faruk, and Md. Shakib Hossain. “Prediction of Medical Insurance Costs: A SHAP-Enhanced Predictive Analysis for Transparency and Interpretability.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+55. Md. Shakib Hossain, Md. Rakib Hossain, SM Mahedy Hasan, Farzana Akter, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, and Md. Hedayatul Islam. “Leveraging AI-Driven Strategies to Mitigate Employee Turnover in Commercial Industries.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+56. Farjana Islam, Md. Farukuzzaman Faruk, SM Mahedy Hasan, Farzana Akter, Azmain Yakin Srizon, Md. Rakib Hossain, Md. Al Mamun, Md. Nazmul Islam, and Md. Faruk Hossain. “An Investigation of Hyperparameters Optimization and Feature Reduction Techniques: Predicting Airline Passenger Satisfaction Using Machine Learning Models.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+57. Shadman Sakib, Md. Rakib Hossain, SM Mahedy Hasan, Farzana Akter, Azmain Yakin Srizon, Md. Farukuzzaman Faruk, and Anindya Basak. “Predictive Analytics in Agriculture: Unraveling the Determinants of Crop Yield with Machine Learning.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+58. Anindya Basak, Farzana Akter, Md. Rakib Hossain, Azmain Yakin Srizon, SM Mahedy Hasan, Md. Farukuzzaman Faruk, and Shadman Sakib. “A Novel CNN-BiLSTM Fusion Model for Robust Age Estimation from Facial Images.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+59. Md. Minhazul Islam, Tanbeer Jubaer, Azmain Yakin Srizon, Md. Rakib Hossain, SM Mahedy Hasan, Md. Farukuzzaman Faruk, and A.F.M. Minhazur Rahman. “Navigating Bengali Linguistics: Insights from Machine and Deep Learning Perspectives for Categorization of Sentences.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+60. Md. Nazmul Islam, Md. Al Mamun, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, SM Mahedy Hasan, and Barsha Roy. “Spatial Attention-guided Deep Learning for Accurate Kidney Disease Classification in CT Scans.” In 2023 26th International Conference on Computer and Information Technology (ICCIT), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+61. Tahsen Islam Sajon, Barsha Roy, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Shakil Mahmud Shuvo, Md. Al Mamun, Abu Sayeed, and SM Mahedy Hasan. “Attention Mechanism-Enhanced Deep CNN Architecture for Precise Multi-class Leukemia Classification.” In International Conference on Big Data, IoT and Machine Learning (BIM), pp. 349–361. Springer, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+62. Sheikh Shraboni Akter, Md. Rakib Hossain, SM Mahedy Hasan, Farzana Akter, Azmain Yakin Srizon, and Md. Farukuzzaman Faruk. “Decoding Smart Grid Equilibrium: Insights from Machine Learning Models.” In 2023 10th IEEE International Conference on Power Systems (ICPS), pp. 1–6. IEEE, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+63. Shakil Mahmud Shuvo, Md. Farukuzzaman Faruk, Azmain Yakin Srizon, Tahsen Islam Sajon, SM Mahedy Hasan, Anirban Barai, A.F.M. Minhazur Rahman, and Md. Al Mamun. “Multi-class Brain Tumor Classification with DenseNet-Based Deep Learning Features and Ensemble of Machine Learning Approaches.” In International Conference on Big Data, IoT and Machine Learning (BIM), pp. 559–573. Springer, 2023.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+64. MD Shamiul Islam Shopnil, SM Mahedy Hasan, Azmain Yakin Srizon, and Md. Farukuzzaman Faruk. “Post-Pandemic Sentiment Analysis Based on Twitter Data Using Deep Learning.” In 2022 25th International Conference on Computer and Information Technology (ICCIT), pp. 704–709. IEEE, 2022.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+65. Azmain Yakin Srizon, SM Mahedy Hasan, Md. Farukuzzaman Faruk, Abu Sayeed, and Md. Ali Hossain. “Human Activity Recognition Utilizing Ensemble of Transfer-Learned Attention Networks and a Low-Cost Convolutional Neural Architecture.” In 2022 25th International Conference on Computer and Information Technology (ICCIT), pp. 943–948. IEEE, 2022.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+66. Protiva Ahammed, Md. Farukuzzaman Faruk, Nasif Raihan, and Mrinmoy Mondal. “Inception V3 Based Transfer Learning Model for the Prognosis of Acute Lymphoblastic Leukemia from Microscopic Images.” In 2022 4th International Conference on Electrical, Computer \& Telecommunication Engineering (ICECTE), pp. 1–4. IEEE, 2022.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+67. Mrinmoy Mondal, Md. Farukuzzaman Faruk, Nasif Raihan, and Protiva Ahammed. “Deep Transfer Learning Based Multi-Class Brain Tumors Classification Using MRI Images.” In 2021 3rd International Conference on Electrical \& Electronic Engineering (ICEEE), pp. 73–76. IEEE, 2021.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+68. Abu Sayeed, Abdul Alim, Md. Ali Hossain, and Md. Farukuzzaman Faruk. “Target Class Oriented Subspace Detection for Hyperspectral Image Classification by Using Mutual Information and Cross Cumulative Residual Entropy.” In 2020 IEEE Region 10 Symposium (TENSYMP), pp. 154–157. IEEE, 2020.
+}
+
+\cvitem{
+    \cvdurationstyle{}
+}{
+69. Md. Ahsan Habib Raj, Md. Al Mamun, and Md. Farukuzzaman Faruk. “CNN Based Diabetic Retinopathy Status Prediction Using Fundus Images.” In 2020 IEEE Region 10 Symposium (TENSYMP), pp. 190–193. IEEE, 2020.
+}
+
+%newpage
+\cvsection{TRAINING \& WORKSHOPS}
+
+\vspace{\cvbetweensectionandheadingextraskipamount}
+
+\cvitem{
+    \cvheadingstyle{Training}
+}
+{
+Foundation Training on Teaching-Learning (19-22 September 2020, Organized by RUET, Rajshahi, Bangladesh)
+}
+
+\cvitem{
+    \cvheadingstyle{Workshops}
+}{
+Workshop on BQNF and BAC Accreditation (19-28 June 2021, Organized by RUET, Rajshahi, Bangladesh)
+}
+
+\cvsection{HONORS \& MEMBERSHIPS}
+
+\vspace{\cvbetweensectionandheadingextraskipamount}
+
+\cvitem{
+    \cvheadingstyle{Awards}
+}{
+    \begin{itemize}
+    \item{IEEE Bangladesh Section Best Paper Award in 3rd International Conference on Electrical, Computer, and Telecommunication Engineering, 2019, Organized by Faculty of ECE, RUET, Rajshahi-6204, Bangladesh}
+    \item{University Merit Scholarship (Duration: Total four year of undergraduate study)}
+    \end{itemize}
+}
+
+\cvitem{
+    \cvheadingstyle{Professional Consultancies}
+}{
+    \begin{itemize}
+    \item Consultant for Software Development and Maintenance of Rajshahi WASA (Fiscal year 2021-22, 2022-23 and 2023-24).
+    \end{itemize}
+}
+
+\cvitem{
+    \cvheadingstyle{Organizing Committee Member}
+}{
+    \begin{itemize}
+    \item Member, Organizing Committee, IEEE PEEIACON Conference-2024.
+    \item Member, Technical and Organizing Committee, RUET CSE Fest 2K22.
+    \end{itemize}
+}
+
+% additional info
+% ---------------
+\cvsection{SUPERVISION \& MANAGEMENT}
+\cvitem{
+    \cvheadingstyle{Supervision}
+}{
+    I have supervised more than 15 undergraduate student's thesis work.
+}
+\cvitem{
+    \cvheadingstyle{Management}
+}{
+    \begin{itemize}
+    \item Deputy Director of Students' Welfare (Finance), RUET (Sep, 2023 to Aug 2024)
+    \item Assistant Provost, Shahid Lt. Selim Hall, RUET (Feb 2021 to Sep 2023)
+    \end{itemize}
+}
+
+\cvsection{FUNDED PROJECTS}
+\cvitem{
+    \cvheadingstyle{[1]}
+}{
+    \textbf{Project Name: Diagnosis of COVID-19 Cases Using Deep Network from Chest Images.}\\
+    \textbf{Resposibily: Project Director}\\
+    Duration: July 2021 to June 2022 (Completed)\\
+    Funding: 150,000 BDT, Funded By: University Grants Commission of Bangladesh(UGC) and Office of the Director of Research \& Extension, RUET.
+}
+\cvitem{
+    \cvheadingstyle{[2]}
+}{
+    \textbf{Project Name: Fast and Automatic Approach for the Detection of Gastrointestinal Diseases Using Deep Network.}\\
+    \textbf{Resposibily: Project Director}\\
+    Duration: July 2022 to June 2023 (Completed)\\
+    Funding: 150,000 BDT, Funded By: University Grants Commission of Bangladesh(UGC) and Office of the Director of Research \& Extension, RUET.
+}
+\cvitem{
+    \cvheadingstyle{[3]}
+}{
+    \textbf{Project Name: Synergistic Ensemble: Integrating Vision Transformer and ResNet-101 for the Precise Classification of Leukemia Subtypes.}\\
+    \textbf{Resposibily: Project Director}\\
+    Duration: July 2023 to June 2024 (Completed)\\
+    Funding: 150,000 BDT, Funded By: University Grants Commission of Bangladesh(UGC) and Office of the Director of Research \& Extension, RUET.
+}
+\cvitem{
+    \cvheadingstyle{[4]}
+}{
+    \textbf{Project Name: Exploiting the Robust Features of Adapted Multi-Layer Gated Recurrent Units for Comprehensive Fake News Identification.}\\
+    \textbf{Resposibily: Project Director}\\
+    Duration: July 2024 to June 2025 (Completed)\\
+    Funding: 150,000 BDT, Funded By: University Grants Commission of Bangladesh(UGC) and Office of the Director of Research \& Extension, RUET.
+}
+
+\end{document}

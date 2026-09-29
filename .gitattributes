@@ -1,0 +1,15 @@
+# Force binary treatment so core.autocrlf never rewrites line endings
+# inside these files (git's own text/binary heuristic can miss small
+# binary files, e.g. simple single-image PDFs, and silently corrupt them
+# on checkout - this happened to be caught for assets/CV-Latex-Template/
+# icon PDFs, but applies repo-wide).
+*.pdf -text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.gif -text
+*.ico -text
+*.woff -text
+*.woff2 -text
+*.ttf -text
+*.otf -text

@@ -12,3 +12,13 @@ Thumbs.db
 
 # Claude Code harness-local state (not project content)
 .claude/
+
+# LaTeX build artifacts (assets/CV-Latex-Template/ holds the CV source;
+# only the .tex files and the icon/photo assets are tracked - the icon
+# PDFs there are real assets, not build output, so only the compiled
+# CV output is excluded by name, not by *.pdf)
+assets/CV-Latex-Template/*.aux
+assets/CV-Latex-Template/*.log
+assets/CV-Latex-Template/*.out
+assets/CV-Latex-Template/*.synctex.gz
+assets/CV-Latex-Template/CV_FARUK.pdf
