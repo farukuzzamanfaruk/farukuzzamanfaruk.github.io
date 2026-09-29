@@ -5,6 +5,19 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — News: added Fall 2026 GTA appointment
+
+Added a `data/news.json` entry ("August 2026") for the new Fall 2026
+Graduate Teaching Assistant appointment — a separate semester assignment
+from the existing Aug 2025 GTA and June 2026 Summer GRA entries, not a
+duplicate of either. Paraphrased the user's raw note into the file's
+existing formal/factual tone (no first-person "excited to share"
+framing, matching sibling entries). Tested locally (JSON validity,
+`http.server` + Playwright render check of `#newsList`, 0 console
+errors) before publishing.
+
+---
+
 ## 2026-09-29 — CV: made the Best Paper Award bullet clickable
 
 Honors & Memberships → Awards → "IEEE Bangladesh Section Best Paper
