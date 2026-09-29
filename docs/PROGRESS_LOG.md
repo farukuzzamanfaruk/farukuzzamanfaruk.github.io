@@ -5,6 +5,17 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — CV correction: Assistant Professor end date
+
+Work-experience entry "Assistant Professor, RUET" said `Jul 2022 – Jul
+2025`; corrected to `Jul 2022 – Aug 2025` in both `data/experience.json`
+(rendered on the live site) and `assets/cv/CV_FARUK.pdf` (page 1, same
+content-stream-patch approach as the 2026-09-21 fix, since the LaTeX
+source still isn't available). Verified via `pdftotext` and a rendered
+page image; only that one date changed, layout otherwise identical.
+
+---
+
 ## 2026-09-21 — CV correction: Funded Project [4] duration
 
 Funded Project [4] (Fake News Identification / multi-layer GRU) in
