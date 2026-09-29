@@ -16,6 +16,11 @@ framing, matching sibling entries). Tested locally (JSON validity,
 `http.server` + Playwright render check of `#newsList`, 0 console
 errors) before publishing.
 
+Follow-up same day: expanded the description with the full department
+chain the user asked for — "School of Computing and Informatics, College
+of Sciences, University of Louisiana at Lafayette" — re-tested the same
+way before pushing.
+
 ---
 
 ## 2026-09-29 — CV: made the Best Paper Award bullet clickable
