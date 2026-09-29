@@ -5,6 +5,19 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — CV: made the Best Paper Award bullet clickable
+
+Honors & Memberships → Awards → "IEEE Bangladesh Section Best Paper
+Award..." bullet now links to RUET's own news post recognizing the award
+(https://www.ruet.ac.bd/news-and-event/icecte-2019-best-paper-award-won-by-cse-faculty-member,
+stripped of a `?utm_source=chatgpt.com` tracking param the user's pasted
+link carried). Verified the page resolves (HTTP 200) and actually
+mentions the award and his name before linking it. Edited in
+`assets/CV-Latex-Template/CV_FARUK.tex`; recompiled clean, verified
+against the rendered page image.
+
+---
+
 ## 2026-09-29 — CV: added Portfolio link to the header
 
 Added a third contact link, "Portfolio" (→ `farukuzzamanfaruk.github.io`),
