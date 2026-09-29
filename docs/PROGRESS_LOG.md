@@ -5,6 +5,18 @@ See `PROJECT_PLAN.md` in this folder for the full plan and architecture.
 
 ---
 
+## 2026-09-29 — CV: added Portfolio link to the header
+
+Added a third contact link, "Portfolio" (→ `farukuzzamanfaruk.github.io`),
+next to Google Scholar and LinkedIn in the CV header — same line, same
+icon/spacing style. Reused the existing globe icon (no dedicated
+portfolio/website icon in the template's asset set). Edited in
+`assets/CV-Latex-Template/CV_FARUK.tex`, recompiled clean (0 errors, 0
+overfull/underfull, still 9 pages), verified against the rendered page
+image before publishing.
+
+---
+
 ## 2026-09-29 — CV: added 2 missing publications, recovered a real LaTeX source
 
 The CV's Publications list had 67 entries; Google Scholar (verified directly
